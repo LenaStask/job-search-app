@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { MantineProvider } from '@mantine/core';
 import './index.css';
+import './assets/fonts/Inter/static/Inter-Regular.ttf';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <MantineProvider withNormalizeCSS>
     <App />
-  </React.StrictMode>,
+  </MantineProvider>,
 );
 
 // If you want to start measuring performance in your app, pass a function
