@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
 import HeaderSimple from './components/header/HeaderSimple';
-import Main from './pages/main/Main';
+import AppRouter from './components/UI/AppRouter';
 
 function App() {
   return (
     <div>
-      <HeaderSimple links={[{ link: '/#1', label: 'Поиск Вакансий' }, { link: '/#2', label: 'Избранное' }]} />
-      <Main />
+      <BrowserRouter>
+        <HeaderSimple links={[{ link: '/main', label: 'Поиск Вакансий' }, { link: '/favorites', label: 'Избранное' }]} />
+        <AppRouter />
+      </BrowserRouter>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
 } from '@mantine/core';
 import PropTypes from 'prop-types';
 import { useDisclosure } from '@mantine/hooks';
+import { Link } from 'react-router-dom';
 import AppLogo from '../appLogo/AppLogo';
 
 const useStyles = createStyles((theme) => ({
@@ -49,17 +50,16 @@ function HeaderSimple({ links }) {
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
-      href={link.link}
+      to={link.link}
       className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         setActive(link.link);
       }}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
