@@ -1,0 +1,10 @@
+.card__title {
+  display: flex;
+  flex-direction: row ;
+  justify-content: space-between;
+}
+.card__location {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}

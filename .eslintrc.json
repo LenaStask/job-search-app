@@ -19,5 +19,11 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["src/**/*Slice.js"],
+            "rules": { "no-param-reassign": "off" }
+        }
+    ]
 }

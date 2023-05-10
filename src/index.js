@@ -3,13 +3,24 @@ import ReactDOM from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
 import './index.css';
 import './assets/fonts/Inter/static/Inter-Regular.ttf';
+import { Provider } from 'react-redux';
+import store from './store/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import CustomFonts from './components/UI/CustomFonts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MantineProvider withNormalizeCSS>
-    <App />
+  <MantineProvider
+    withNormalizeCSS
+    theme={{
+      fontFamily: 'Inter, sans-serif',
+    }}
+  >
+    <CustomFonts />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </MantineProvider>,
 );
 

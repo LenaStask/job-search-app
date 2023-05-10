@@ -1,30 +1,23 @@
 import React from 'react';
 import './main.scss';
 import {
-  Container, Grid, Stack, Skeleton,
+  Container, createStyles,
 } from '@mantine/core';
-import Search from '../../components/search/Search';
+import VacancyList from '../../components/vacancyList/VacancyList';
 
+const useStyles = createStyles(() => ({
+  container: {
+    background: '#F7F7F8',
+  },
+}));
 function Main() {
+  const { classes } = useStyles();
   return (
-    <Container my="md">
-      <Grid columns={24}>
-        <Grid.Col span={8}>
-          <Stack>
-            <Skeleton />
-            <Skeleton />
-          </Stack>
-        </Grid.Col>
-        <Grid.Col span={16}>
-          <Stack>
-            <Search />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </Container>
+    <div className="container">
+      <Container className={classes.container}>
+        <VacancyList />
+      </Container>
+    </div>
   );
 }
 
