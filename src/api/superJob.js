@@ -37,6 +37,10 @@ const getVacancies = async (data) => {
     params.keyword = data.keyword;
   }
 
+  if (data.catalogues) {
+    params.catalogues = data.catalogues;
+  }
+
   return client.get('vacancies/', {
     headers: {
       'X-Api-App-Id': config.client_secret,
@@ -46,4 +50,6 @@ const getVacancies = async (data) => {
   });
 };
 
-export default { getVacancies };
+const getCatalogues = async () => client.get('catalogues/');
+
+export default { getVacancies, getCatalogues };

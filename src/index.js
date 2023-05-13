@@ -15,6 +15,9 @@ root.render(
     withNormalizeCSS
     theme={{
       fontFamily: 'Inter, sans-serif',
+      colors: {
+        basic: ['#5E96FC', '#ACADB9'],
+      },
     }}
   >
     <CustomFonts />

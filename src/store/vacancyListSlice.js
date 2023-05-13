@@ -4,14 +4,25 @@ import superJob from '../api/superJob';
 export const getVacancies = createAsyncThunk(
   'vacancies/get',
   async (_, { getState }) => {
-    const { page, count, query } = getState().vacancyList;
-
+    const {
+      page, count, query, filters,
+    } = getState().vacancyList;
+    console.log(filters);
     const response = await superJob.getVacancies({
       page,
       count,
       keyword: query,
+      catalogues: filters.catalogue,
     });
 
+    return response.data;
+  },
+);
+
+export const getCatalogues = createAsyncThunk(
+  'catalogues/get',
+  async () => {
+    const response = await superJob.getCatalogues();
     return response.data;
   },
 );
@@ -24,6 +35,10 @@ const vacancyListSlice = createSlice({
     count: 4,
     query: '',
     isLoading: false,
+    catalogues: [],
+    filters: {
+      catalogue: null,
+    },
   },
   reducers: {
     setPage(state, action) {
@@ -31,6 +46,9 @@ const vacancyListSlice = createSlice({
     },
     setQuery(state, action) {
       state.query = action.payload;
+    },
+    setFilters(state, action) {
+      state.filters.catalogue = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,8 +62,14 @@ const vacancyListSlice = createSlice({
     builder.addCase(getVacancies.rejected, (state) => {
       state.isLoading = false;
     });
+    builder.addCase(getCatalogues.fulfilled, (state, action) => {
+      state.catalogues = action.payload.map((catalogue) => ({
+        title: catalogue.title_rus,
+        key: catalogue.key,
+      }));
+    });
   },
 });
 
-export const { setPage, setQuery } = vacancyListSlice.actions;
+export const { setPage, setQuery, setFilters } = vacancyListSlice.actions;
 export default vacancyListSlice.reducer;

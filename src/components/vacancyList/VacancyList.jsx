@@ -7,27 +7,28 @@ import Search from '../search/Search';
 import { getVacancies } from '../../store/vacancyListSlice';
 import Vacancy from '../vacancy/Vacancy';
 import Pagination from '../UI/pagination/Pagination';
+import Filters from '../filters/Filters';
 
 function VacancyList() {
   const {
-    vacancies, page, query, isLoading,
+    vacancies, page, query, isLoading, filters,
   } = useSelector((state) => state.vacancyList);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getVacancies());
-  }, [page, query]);
+  }, [page, query, filters]);
 
   return (
-    <Grid columns={24}>
-      <Grid.Col span={8}>
+    <Grid columns={12}>
+      <Grid.Col sm={4}>
         <Stack>
-          <Skeleton />
+          <Filters />
           <Skeleton />
         </Stack>
       </Grid.Col>
-      <Grid.Col span={16}>
+      <Grid.Col sm={8}>
         <Stack>
           <Search />
           <div>
