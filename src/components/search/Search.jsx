@@ -4,7 +4,7 @@ import {
 } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useDispatch } from 'react-redux';
-import { setQuery } from '../../store/vacancyListSlice';
+import { setQuery } from '../../store/slices/searchSlice';
 
 function Search() {
   const theme = useMantineTheme();

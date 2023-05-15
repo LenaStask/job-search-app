@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Pagination as MantinePagination } from '@mantine/core';
 import { useDispatch } from 'react-redux';
-import { setPage } from '../../../store/vacancyListSlice';
+import { setPage } from '../../../store/slices/vacancyListSlice';
 
 function Pagination({ page }) {
   const dispatch = useDispatch();
