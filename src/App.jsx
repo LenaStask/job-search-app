@@ -6,12 +6,10 @@ import AppRouter from './components/UI/AppRouter';
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <HeaderSimple links={[{ link: '/main', label: 'Поиск Вакансий' }, { link: '/favorites', label: 'Избранное' }]} />
-        <AppRouter />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <HeaderSimple links={[{ link: '/main', label: 'Поиск Вакансий' }, { link: '/favorites', label: 'Избранное' }]} />
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

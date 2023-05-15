@@ -16,7 +16,8 @@ root.render(
     theme={{
       fontFamily: 'Inter, sans-serif',
       colors: {
-        basic: ['#5E96FC', '#ACADB9'],
+        blueColor: ['#5E96FC'],
+        greyColor: ['#F7F7F8'],
       },
     }}
   >

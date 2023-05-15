@@ -79,7 +79,7 @@ function Filters() {
         mt={8}
         mb={8}
       />
-      <Button onClick={() => onClick(selectCatalogue)} sx={{ backgroundColor: theme.colors.basic[0] }} radius="md" fullWidth>
+      <Button onClick={() => onClick(selectCatalogue)} sx={{ backgroundColor: theme.colors.blueColor[0] }} radius="md" fullWidth>
         Применить
       </Button>
     </Paper>

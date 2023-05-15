@@ -15,9 +15,15 @@ function Pagination({ page }) {
     <MantinePagination
       total={15}
       position="center"
-      color="#5E96FC"
       value={page}
       onChange={onChangePage}
+      styles={(theme) => ({
+        control: {
+          '&[data-active]': {
+            backgroundColor: theme.colors.blueColor[0],
+          },
+        },
+      })}
     />
   );
 }

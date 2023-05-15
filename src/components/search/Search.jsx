@@ -21,7 +21,7 @@ function Search() {
       icon={<IconSearch size="1.1rem" stroke={1.5} />}
       placeholder="Введите название вакансии"
       rightSection={
-        <Button compact size="xs" sx={{ backgroundColor: theme.colors.basic[0] }} variant="filled" onClick={() => onSearch(value)}>Поиск</Button>
+        <Button compact size="xs" sx={{ backgroundColor: theme.colors.blueColor[0] }} variant="filled" onClick={() => onSearch(value)}>Поиск</Button>
       }
       rightSectionWidth={88}
       radius="8px"
