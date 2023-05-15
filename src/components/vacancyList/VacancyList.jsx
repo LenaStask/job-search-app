@@ -25,7 +25,7 @@ function VacancyList() {
       <div style={{ marginBottom: '8px', minHeight: '392px', position: 'relative' }}>
         <LoadingOverlay visible={isLoading} />
         {vacancies.map((vacancy) => (
-          <Vacancy key={vacancy.id} profession={vacancy.profession} />
+          <Vacancy key={vacancy.id} vacancy={vacancy} />
         ))}
       </div>
       <Pagination page={page} />

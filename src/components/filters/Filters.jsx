@@ -55,6 +55,8 @@ function Filters() {
         labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
         radius="md"
         wrapperProps={{ mt: '15px' }}
+        step={1000}
+        min={0}
         styles={{
           control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' },
         }}
@@ -65,6 +67,8 @@ function Filters() {
         labelProps={{ fw: 'bold', fz: '16px', mb: '4px' }}
         radius="md"
         wrapperProps={{ mt: '15px' }}
+        step={1000}
+        min={0}
         styles={{
           control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' }, wrapper: { mt: '8px' },
         }}
