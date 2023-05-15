@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Paper, Select, Button,
-  Group, Title, Anchor, Center, useMantineTheme, NumberInput, MantineProvider,
+  Group, Title, Anchor, Center, useMantineTheme, NumberInput,
 } from '@mantine/core';
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { IconChevronDown } from '@tabler/icons-react';
 import { X } from 'tabler-icons-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCatalogues, setFilters } from '../../store/vacancyListSlice';
+import { setFilters, getCatalogues } from '../../store/slices/filtersSlice';
 
 function Filters() {
   const theme = useMantineTheme();
   const dispatch = useDispatch();
-  const { catalogues } = useSelector((state) => state.vacancyList);
+  const { catalogues } = useSelector((state) => state.filters);
   const [selectCatalogue, setSelectCatalogue] = useState('');
 
   useEffect(() => {
@@ -36,50 +36,40 @@ function Filters() {
         </Anchor>
       </Group>
       <Select
-        onChange={(event) => {
-          setSelectCatalogue(event.target.value);
+        onChange={(value) => {
+          setSelectCatalogue(value);
         }}
         label="Отрасль"
         labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
-        placeholder="Выберете отрасль"
+        placeholder="Выберите отрасль"
         data={catalogues.map((catalogue) => ({ value: catalogue.key, label: catalogue.title }))}
         rightSection={<IconChevronDown size={18} style={{ color: '#ACADB9' }} />}
         rightSectionWidth={40}
         styles={{ rightSection: { pointerEvents: 'none' } }}
         radius="md"
       />
-      <MantineProvider
-        inherit
-        theme={{
-          components: {
-            Input: {
-              styles: (theme1) => ({
-                input: { borderColor: theme.colors.violet[theme1.fn.primaryShade()] },
-                control: { backgroundColor: theme.colors.blue[0], borderLeft: 0 },
-                rightSection: { borderBottom: 0, borderLeft: 0 },
-              }),
-            },
-          },
+      <NumberInput
+        placeholder="От"
+        data={['React', 'Vue', 'Angular', 'Svelte']}
+        label="Оклад"
+        labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
+        radius="md"
+        wrapperProps={{ mt: '15px' }}
+        styles={{
+          control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' },
         }}
-      >
-        <NumberInput
-          placeholder="От"
-          data={['React', 'Vue', 'Angular', 'Svelte']}
-          label="Оклад"
-          labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
-          radius="md"
-          wrapperProps={{ mt: '15px' }}
-          controlUp={<IconChevronUp />}
-        />
-      </MantineProvider>
-      <Select
+      />
+      <NumberInput
         placeholder="До"
         data={['React', 'Vue', 'Angular', 'Svelte']}
+        labelProps={{ fw: 'bold', fz: '16px', mb: '4px' }}
         radius="md"
-        mt={8}
-        mb={8}
+        wrapperProps={{ mt: '15px' }}
+        styles={{
+          control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' }, wrapper: { mt: '8px' },
+        }}
       />
-      <Button onClick={() => onClick(selectCatalogue)} sx={{ backgroundColor: theme.colors.blueColor[0] }} radius="md" fullWidth>
+      <Button onClick={() => onClick(selectCatalogue)} sx={{ backgroundColor: theme.colors.blueColor[0], marginTop: '20px' }} radius="md" fullWidth>
         Применить
       </Button>
     </Paper>
