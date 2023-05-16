@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../assets/fonts/Poppins/Poppins-SemiBold.ttf';
 import {
   Burger,
-  Container, Group, Header, createStyles, rem,
+  Container, Group, Header as MantineHeader, createStyles, rem,
 } from '@mantine/core';
 import PropTypes from 'prop-types';
 import { useDisclosure } from '@mantine/hooks';
@@ -44,7 +44,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function HeaderSimple({ links }) {
+function Header({ links }) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
@@ -63,7 +63,7 @@ function HeaderSimple({ links }) {
   ));
 
   return (
-    <Header height={84}>
+    <MantineHeader height={84}>
       <Container className={classes.header}>
         <AppLogo />
         <Group className={classes.links}>
@@ -71,15 +71,15 @@ function HeaderSimple({ links }) {
         </Group>
         <Burger opened={opened} onClick={toggle} className={classes.burger} />
       </Container>
-    </Header>
+    </MantineHeader>
   );
 }
 
-HeaderSimple.propTypes = {
+Header.propTypes = {
   links: PropTypes.arrayOf(PropTypes.shape({
     link: PropTypes.string,
     label: PropTypes.string,
   })).isRequired,
 };
 
-export default HeaderSimple;
+export default Header;

@@ -25,7 +25,7 @@ function Vacancy({ vacancy }) {
   return (
     <Card className={classes.vacancy} padding="24px" margin="16px" withBorder radius="12px">
       <div className="card__title">
-        <Title className={classes.title} size={rem(20)} color="#5E96FC">{vacancy.profession}</Title>
+        <Title className={classes.title} size={rem(20)} fw={600} color="#5E96FC">{vacancy.profession}</Title>
         <ActionIcon>
           <a className="header__logo-image" href="/#">
             <img src={star} alt="icon" />
