@@ -1,33 +1,24 @@
 import React from 'react';
-import {
-  Container, Grid, Stack, Skeleton,
-} from '@mantine/core';
-import Search from '../../components/search/Search';
+import { Container, Grid } from '@mantine/core';
 import Filters from '../../components/filters/Filters';
+import Search from '../../components/search/Search';
 import VacancyList from '../../components/vacancyList/VacancyList';
+import Pagination from '../../components/pagination/Pagination';
 
 function Main() {
   return (
-    <div className="container">
-      <Container mt={40}>
-        <Grid columns={12}>
-          <Grid.Col sm={4}>
-            <Stack>
-              <Filters />
-              <Skeleton />
-            </Stack>
-          </Grid.Col>
-          <Grid.Col sm={8}>
-            <Stack>
-              <Search />
-              <VacancyList />
-              <Skeleton />
-              <Skeleton />
-            </Stack>
-          </Grid.Col>
-        </Grid>
-      </Container>
-    </div>
+    <Container mt={40}>
+      <Grid columns={12}>
+        <Grid.Col sm={4}>
+          <Filters />
+        </Grid.Col>
+        <Grid.Col sm={8}>
+          <Search />
+          <VacancyList />
+          <Pagination />
+        </Grid.Col>
+      </Grid>
+    </Container>
   );
 }
 

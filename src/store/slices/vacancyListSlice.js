@@ -4,14 +4,13 @@ import superJob from '../../api/superJob';
 export const getVacancies = createAsyncThunk(
   'vacancies/get',
   async (_, { getState }) => {
-    const { page, count } = getState().vacancyList;
+    const { page, count } = getState().pagination;
     const { query } = getState().search;
     const { filters } = getState().filters;
-    console.log(filters);
     const response = await superJob.getVacancies({
       page,
       count,
-      keyword: query,
+      keyword: query.value,
       catalogues: filters.catalogue,
     });
     return response.data;
@@ -22,15 +21,9 @@ const vacancyListSlice = createSlice({
   name: 'vacancyList',
   initialState: {
     vacancies: [],
-    page: 1,
-    count: 4,
     isLoading: false,
   },
-  reducers: {
-    setPage(state, action) {
-      state.page = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getVacancies.pending, (state) => {
       state.isLoading = true;

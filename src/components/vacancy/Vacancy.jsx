@@ -23,13 +23,21 @@ function Vacancy({ vacancy }) {
   const { classes } = useStyles();
 
   return (
-    <Card className={classes.vacancy} padding="24px" margin="16px" withBorder radius="12px">
+    <Card
+      className={classes.vacancy}
+      padding="24px"
+      style={{ margin: '16px 0' }}
+      withBorder
+      radius="12px"
+      component="a"
+      href={`/vacancy/${vacancy.id}`}
+    >
       <div className="card__title">
         <Title className={classes.title} size={rem(20)} fw={600} color="#5E96FC">{vacancy.profession}</Title>
         <ActionIcon>
-          <a className="header__logo-image" href="/#">
+          <div className="header__logo-image" href="/#">
             <img src={star} alt="icon" />
-          </a>
+          </div>
         </ActionIcon>
       </div>
       <div className="card__content">
@@ -52,6 +60,7 @@ function Vacancy({ vacancy }) {
 }
 Vacancy.propTypes = {
   vacancy: PropTypes.shape({
+    id: PropTypes.number,
     profession: PropTypes.string,
     payment_from: PropTypes.number,
     type_of_work: PropTypes.shape({

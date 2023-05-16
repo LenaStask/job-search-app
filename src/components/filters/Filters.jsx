@@ -23,7 +23,7 @@ function Filters() {
   }, [dispatch]);
 
   return (
-    <Paper radius="md" p="md" withBorder>
+    <Paper radius={12} p="md" withBorder>
       <Group position="apart" mb={32}>
         <Title size="h4">
           Фильтры
@@ -54,7 +54,7 @@ function Filters() {
         label="Оклад"
         labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
         radius="md"
-        wrapperProps={{ mt: '15px' }}
+        wrapperProps={{ mt: '20px' }}
         step={1000}
         min={0}
         styles={{
@@ -66,7 +66,7 @@ function Filters() {
         data={['React', 'Vue', 'Angular', 'Svelte']}
         labelProps={{ fw: 'bold', fz: '16px', mb: '4px' }}
         radius="md"
-        wrapperProps={{ mt: '15px' }}
+        wrapperProps={{ mt: '8px' }}
         step={1000}
         min={0}
         styles={{

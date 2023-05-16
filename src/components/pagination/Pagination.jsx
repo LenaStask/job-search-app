@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { Pagination as MantinePagination } from '@mantine/core';
-import { useDispatch } from 'react-redux';
-import { setPage } from '../../../store/slices/vacancyListSlice';
+import { setPage } from '../../store/slices/paginationSlice';
 
-function Pagination({ page }) {
+function Pagination() {
   const dispatch = useDispatch();
+  const { page } = useSelector((state) => state.pagination);
 
   const onChangePage = useCallback((newPage) => {
     dispatch(setPage(newPage));
@@ -27,9 +27,5 @@ function Pagination({ page }) {
     />
   );
 }
-
-Pagination.propTypes = {
-  page: PropTypes.number.isRequired,
-};
 
 export default Pagination;
