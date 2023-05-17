@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
   },
   linkActive: {
     '&, &:hover': {
-      color: '#5E96FC',
+      color: theme.colors.brand,
     },
   },
 }));

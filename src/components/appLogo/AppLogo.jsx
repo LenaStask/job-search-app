@@ -1,15 +1,27 @@
 import React from 'react';
-import './appLogo.scss';
+import {
+  Box, useMantineTheme, Center, Image,
+} from '@mantine/core';
 import logo from '../../assets/logo.svg';
 
 function AppLogo() {
+  const theme = useMantineTheme();
   return (
-    <div className="header__logo">
-      <a className="header__logo-image" href="/#">
-        <img src={logo} alt="Logo" />
-      </a>
-      <div className="header__app-name">Jobored</div>
-    </div>
+    <Box
+      sx={() => ({
+        textAlign: 'center',
+        fontSize: 24,
+        fontFamily: 'Poppins, sans-serif',
+        fontWeight: '600',
+        cursor: 'pointer',
+        color: theme.colors.grayScale[7],
+      })}
+    >
+      <Center>
+        <Image src={logo} alt="Logo" mr={8} />
+        <span> Jobored</span>
+      </Center>
+    </Box>
   );
 }
 

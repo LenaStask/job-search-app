@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextInput, Button } from '@mantine/core';
+import { TextInput, Button, useMantineTheme } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { setQuery } from '../../store/slices/vacancySearchSlice';
 
 function Search() {
   const dispatch = useDispatch();
+  const theme = useMantineTheme();
 
   const [value, setValue] = useState('');
 
@@ -26,6 +27,7 @@ function Search() {
           size="xs"
           variant="filled"
           radius="md"
+          sx={{ backgroundColor: theme.colors.brand }}
         >
           Поиск
         </Button>

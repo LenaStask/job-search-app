@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActionIcon, Card, Title, rem, createStyles, Text, Group,
+  ActionIcon, Card, Title, rem, createStyles, Text, Group, useMantineTheme,
 } from '@mantine/core';
 import PropTypes from 'prop-types';
 import star from '../../assets/star.svg';
@@ -20,6 +20,7 @@ const useStyles = createStyles(() => ({
 
 function VacancyListItem({ vacancy }) {
   const { classes } = useStyles();
+  const theme = useMantineTheme();
 
   return (
     <Card
@@ -32,7 +33,14 @@ function VacancyListItem({ vacancy }) {
       href={`/vacancy/${vacancy.id}`}
     >
       <Group position="apart" noWrap="true">
-        <Title className={classes.title} size={rem(20)} fw={600} color="#5E96FC">{vacancy.profession}</Title>
+        <Title
+          className={classes.title}
+          size={rem(20)}
+          fw={600}
+          sx={{ color: theme.colors.brand }}
+        >
+          {vacancy.profession}
+        </Title>
         <ActionIcon variant="transparent">
           <div className="header__logo-image" href="/#">
             <img src={star} alt="icon" />

@@ -15,7 +15,8 @@ root.render(
     withNormalizeCSS
     theme={{
       colors: {
-        brand: ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#5E96FC', '#92C1FF', '#5E96FC', '#5E96FC'],
+        brand: ['#DEECFF', '#DEECFF', '#DEECFF', '#DEECFF', '#DEECFF', '#DEECFF', '#C9E0FF', '#B7D6FF', '#92C1FF', '#5E96FC'],
+        grayScale: ['#FFFFFF', '#F5F5F6', '#EAEBED', '#D5D6DC', '#ACADB9', '#7B7C88', '#232134'],
       },
       primaryColor: 'brand',
     }}

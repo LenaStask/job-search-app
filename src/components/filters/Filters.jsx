@@ -34,6 +34,7 @@ function Filters() {
           sx={() => ({
             textAlign: 'center',
             cursor: 'pointer',
+            color: theme.colors.grayScale[4],
             '&:hover': {
               color:
                 theme.colors.brand,
@@ -82,7 +83,12 @@ function Filters() {
           control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' }, wrapper: { mt: '8px' },
         }}
       />
-      <Button onClick={onFilter} sx={{ backgroundColor: theme.colors.brand, marginTop: '20px' }} radius="md" fullWidth>
+      <Button
+        onClick={onFilter}
+        sx={{ backgroundColor: theme.colors.brand, marginTop: '20px' }}
+        radius="md"
+        fullWidth
+      >
         Применить
       </Button>
     </Paper>
