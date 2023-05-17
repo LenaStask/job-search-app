@@ -52,9 +52,9 @@ const getVacancies = async (data) => {
 
 const getCatalogues = async () => client.get('catalogues/');
 
-const getVacancy = async (data) => {
+const getVacancy = async (id) => {
   const auth = await authenticate();
-  return client.get(`vacancies/${data.id}/`, {
+  return client.get(`vacancies/${id}/`, {
     headers: {
       'X-Api-App-Id': config.client_secret,
       Authorization: `Bearer ${auth.access_token}`,

@@ -1,18 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useMantineTheme, TextInput, Button } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { setQuery } from '../../store/slices/searchSlice';
+import { setQuery } from '../../store/slices/vacancySearchSlice';
 
 function Search() {
   const dispatch = useDispatch();
 
-  const theme = useMantineTheme();
   const [value, setValue] = useState('');
 
-  const onSearch = useCallback((query) => {
-    dispatch(setQuery(query));
-  }, [dispatch]);
+  const onSearch = useCallback(() => {
+    dispatch(setQuery(value));
+  }, [value]);
 
   return (
     <TextInput
@@ -23,9 +22,8 @@ function Search() {
       size="lg"
       rightSection={(
         <Button
-          onClick={() => onSearch({ value })}
+          onClick={onSearch}
           size="xs"
-          sx={{ backgroundColor: theme.colors.blueColor[0] }}
           variant="filled"
           radius="md"
         >

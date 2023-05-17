@@ -1,26 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Paper, Select, Button,
-  Group, Title, Anchor, Center, useMantineTheme, NumberInput,
+  Paper, Select, Button, Group, Title, useMantineTheme, NumberInput, Box, Center,
 } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
 import { X } from 'tabler-icons-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilters, getCatalogues } from '../../store/slices/filtersSlice';
+import { getCatalogues } from '../../store/slices/filtersSlice';
+import { setFilters } from '../../store/slices/vacancySearchSlice';
 
 function Filters() {
-  const theme = useMantineTheme();
   const dispatch = useDispatch();
   const { catalogues } = useSelector((state) => state.filters);
-  const [selectCatalogue, setSelectCatalogue] = useState('');
+
+  const [catalogue, setCatalogue] = useState('');
+
+  const theme = useMantineTheme();
 
   useEffect(() => {
     dispatch(getCatalogues());
   }, []);
 
-  const onClick = useCallback((value) => {
-    dispatch(setFilters(value));
-  }, [dispatch]);
+  const onFilter = useCallback(() => {
+    dispatch(setFilters({ catalogue }));
+  }, [catalogue]);
 
   return (
     <Paper radius={12} p="md" withBorder>
@@ -28,21 +30,28 @@ function Filters() {
         <Title size="h4">
           Фильтры
         </Title>
-        <Anchor href="/some/valid/uri" size={14} sx={{ color: '#ACADB9' }}>
+        <Box
+          sx={() => ({
+            textAlign: 'center',
+            cursor: 'pointer',
+            '&:hover': {
+              color:
+                theme.colors.brand,
+            },
+          })}
+        >
           <Center>
             <span>Сбросить все</span>
             <X size={14} strokeWidth={1.5} style={{ marginLeft: 5 }} />
           </Center>
-        </Anchor>
+        </Box>
       </Group>
       <Select
-        onChange={(value) => {
-          setSelectCatalogue(value);
-        }}
+        onChange={(value) => setCatalogue(value)}
         label="Отрасль"
         labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
         placeholder="Выберите отрасль"
-        data={catalogues.map((catalogue) => ({ value: catalogue.key, label: catalogue.title }))}
+        data={catalogues.map((c) => ({ value: c.key, label: c.title }))}
         rightSection={<IconChevronDown size={18} style={{ color: '#ACADB9' }} />}
         rightSectionWidth={40}
         styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -73,7 +82,7 @@ function Filters() {
           control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' }, wrapper: { mt: '8px' },
         }}
       />
-      <Button onClick={() => onClick(selectCatalogue)} sx={{ backgroundColor: theme.colors.blueColor[0], marginTop: '20px' }} radius="md" fullWidth>
+      <Button onClick={onFilter} sx={{ backgroundColor: theme.colors.brand, marginTop: '20px' }} radius="md" fullWidth>
         Применить
       </Button>
     </Paper>

@@ -1,28 +1,34 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { LoadingOverlay } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { getVacancies } from '../../store/slices/vacancyListSlice';
-import Vacancy from '../vacancy/Vacancy';
+import VacancyListItem from '../vacancyListItem/VacancyListItem';
 
-function VacancyList() {
-  const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
-  const { page } = useSelector((state) => state.pagination);
-  const { query } = useSelector((state) => state.search);
-  const { filters } = useSelector((state) => state.filters);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getVacancies());
-  }, [page, query, filters]);
-
+function VacancyList({ vacancies, isLoading }) {
   return (
     <div style={{ marginBottom: '16px', minHeight: '392px', position: 'relative' }}>
       <LoadingOverlay visible={isLoading} />
       {vacancies.map((vacancy) => (
-        <Vacancy key={vacancy.id} vacancy={vacancy} />
+        <VacancyListItem key={vacancy.id} vacancy={vacancy} />
       ))}
     </div>
   );
 }
+
+VacancyList.propTypes = {
+  vacancies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      profession: PropTypes.string,
+      payment_from: PropTypes.number,
+      type_of_work: PropTypes.shape({
+        title: PropTypes.string,
+      }),
+      town: PropTypes.shape({
+        title: PropTypes.string,
+      }),
+    }),
+  ).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
 export default VacancyList;

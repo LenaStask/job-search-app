@@ -14,11 +14,10 @@ root.render(
   <MantineProvider
     withNormalizeCSS
     theme={{
-      fontFamily: 'Inter, sans-serif',
       colors: {
-        blueColor: ['#5E96FC'],
-        greyColor: ['#F7F7F8'],
+        brand: ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#5E96FC', '#92C1FF', '#5E96FC', '#5E96FC'],
       },
+      primaryColor: 'brand',
     }}
   >
     <CustomFonts />

@@ -1,8 +1,9 @@
 import axios from 'axios';
+import config from './superJobConfig';
 
 export default axios.create({
-  baseURL: 'https://startup-summer-2023-proxy.onrender.com/2.0/',
+  baseURL: config.base_url,
   headers: {
-    'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+    'x-secret-key': config.secret_key,
   },
 });

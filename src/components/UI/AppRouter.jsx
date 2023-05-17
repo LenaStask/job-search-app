@@ -9,7 +9,7 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/favorites" element={<Favorites />} />
-      <Route path="/vacancy" element={<Vacancy />} />
+      <Route path="/vacancy/:id" element={<Vacancy />} />
     </Routes>
   );
 }

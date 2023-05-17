@@ -1,26 +1,26 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination as MantinePagination } from '@mantine/core';
-import { setPage } from '../../store/slices/paginationSlice';
+import { setPage } from '../../store/slices/vacancySearchSlice';
 
 function Pagination() {
   const dispatch = useDispatch();
-  const { page } = useSelector((state) => state.pagination);
+  const { pagination } = useSelector((state) => state.vacancySearch);
 
-  const onChangePage = useCallback((newPage) => {
-    dispatch(setPage(newPage));
+  const onChangePage = useCallback((page) => {
+    dispatch(setPage(page));
   }, [dispatch]);
 
   return (
     <MantinePagination
-      total={15}
+      total={Math.min(Math.ceil(pagination.total / pagination.count), 500)}
       position="center"
-      value={page}
+      value={pagination.page}
       onChange={onChangePage}
       styles={(theme) => ({
         control: {
           '&[data-active]': {
-            backgroundColor: theme.colors.blueColor[0],
+            backgroundColor: theme.colors.brand,
           },
         },
       })}

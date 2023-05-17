@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-  ActionIcon, Card, Title, rem, createStyles, Text,
+  ActionIcon, Card, Title, rem, createStyles, Text, Group,
 } from '@mantine/core';
 import PropTypes from 'prop-types';
 import star from '../../assets/star.svg';
 import location from '../../assets/location.svg';
-import './vacancy.scss';
 
 const useStyles = createStyles(() => ({
   vacancy: {
@@ -19,7 +18,7 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-function Vacancy({ vacancy }) {
+function VacancyListItem({ vacancy }) {
   const { classes } = useStyles();
 
   return (
@@ -32,15 +31,15 @@ function Vacancy({ vacancy }) {
       component="a"
       href={`/vacancy/${vacancy.id}`}
     >
-      <div className="card__title">
+      <Group position="apart" noWrap="true">
         <Title className={classes.title} size={rem(20)} fw={600} color="#5E96FC">{vacancy.profession}</Title>
-        <ActionIcon>
+        <ActionIcon variant="transparent">
           <div className="header__logo-image" href="/#">
             <img src={star} alt="icon" />
           </div>
         </ActionIcon>
-      </div>
-      <div className="card__content">
+      </Group>
+      <Group spacing={12}>
         <Text fw={600} fz={16}>
           з/п от
           {' '}
@@ -48,17 +47,18 @@ function Vacancy({ vacancy }) {
           {' '}
           rub
         </Text>
-        <Text fw={400} fz={20} c="#7B7C88" mr={12} ml={12}>•</Text>
+        <Text fw={400} fz={20} c="#7B7C88">•</Text>
         <Text fw={400} fz={16}>{vacancy.type_of_work.title}</Text>
-      </div>
-      <div className="card__location">
+      </Group>
+      <Group spacing={12}>
         <img src={location} alt="location" />
-        <Text fw={400} fz={16} ml={12}>{vacancy.town.title}</Text>
-      </div>
+        <Text fw={400} fz={16}>{vacancy.town.title}</Text>
+      </Group>
     </Card>
   );
 }
-Vacancy.propTypes = {
+
+VacancyListItem.propTypes = {
   vacancy: PropTypes.shape({
     id: PropTypes.number,
     profession: PropTypes.string,
@@ -71,4 +71,5 @@ Vacancy.propTypes = {
     }),
   }).isRequired,
 };
-export default Vacancy;
+
+export default VacancyListItem;

@@ -3,9 +3,9 @@ import superJob from '../../api/superJob';
 
 export const getVacancy = createAsyncThunk(
   'vacancy/get',
-  async (_, { getState }) => {
-    const { id } = getState().vacancy;
-    const response = await superJob.getVacancy({ id });
+  async (id) => {
+    const response = await superJob.getVacancy(id);
+
     return response.data;
   },
 );
@@ -13,14 +13,9 @@ export const getVacancy = createAsyncThunk(
 const vacancySlice = createSlice({
   name: 'vacancy',
   initialState: {
-    id: 0,
-    vacancy: {},
+    vacancy: null,
   },
-  reduser: {
-    setId(state, action) {
-      state.id = action.payload;
-    },
-  },
+  reducer: {},
   extraReducers: (builder) => {
     builder.addCase(getVacancy.fulfilled, (state, action) => {
       state.vacancy = action.payload;
@@ -28,5 +23,4 @@ const vacancySlice = createSlice({
   },
 });
 
-export const { setId } = vacancySlice.actions;
 export default vacancySlice.reducer;
