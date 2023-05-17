@@ -8,13 +8,16 @@ function AppLogo() {
   const theme = useMantineTheme();
   return (
     <Box
+      component="a"
+      href="/"
       sx={() => ({
+        textDecoration: 'none',
         textAlign: 'center',
         fontSize: 24,
         fontFamily: 'Poppins, sans-serif',
         fontWeight: '600',
         cursor: 'pointer',
-        color: theme.colors.grayScale[7],
+        color: theme.colors.grayScale,
       })}
     >
       <Center>
