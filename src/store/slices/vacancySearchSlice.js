@@ -4,7 +4,9 @@ import superJob from '../../api/superJob';
 export const getVacancies = createAsyncThunk(
   'vacancies/get',
   async (_, { getState }) => {
-    const { filters, search, pagination } = getState().vacancySearch;
+    const {
+      filters, search, pagination,
+    } = getState().vacancySearch;
 
     const response = await superJob.getVacancies({
       keyword: search.query,
@@ -12,10 +14,19 @@ export const getVacancies = createAsyncThunk(
       page: pagination.page - 1,
       count: pagination.count,
     });
-
     return response.data;
   },
 );
+
+const getSavedFavorites = () => {
+  const favorites = localStorage.getItem('favorites');
+
+  return favorites ? JSON.parse(favorites) : [];
+};
+
+const setSavedFavorites = (favorites) => {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+};
 
 const vacancySearchSlice = createSlice({
   name: 'vacancySearch',
@@ -30,6 +41,7 @@ const vacancySearchSlice = createSlice({
       count: 4,
       total: 0,
     },
+    favorites: getSavedFavorites(),
     isLoading: false,
   },
   reducers: {
@@ -43,6 +55,14 @@ const vacancySearchSlice = createSlice({
     },
     setPage(state, action) {
       state.pagination.page = action.payload;
+    },
+    toggleFavorite(state, action) {
+      if (!state.favorites.includes(action.payload)) {
+        state.favorites.push(action.payload);
+      } else {
+        state.favorites = state.favorites.filter((id) => id !== action.payload);
+      }
+      setSavedFavorites(state.favorites);
     },
   },
   extraReducers: (builder) => {
@@ -62,5 +82,7 @@ const vacancySearchSlice = createSlice({
   },
 });
 
-export const { setFilters, setQuery, setPage } = vacancySearchSlice.actions;
+export const {
+  setFilters, setQuery, setPage, toggleFavorite,
+} = vacancySearchSlice.actions;
 export default vacancySearchSlice.reducer;

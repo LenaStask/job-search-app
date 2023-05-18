@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ActionIcon, Card, Title, rem, createStyles, Text, Group, useMantineTheme,
 } from '@mantine/core';
 import PropTypes from 'prop-types';
-import star from '../../assets/star.svg';
+import { IconStar, IconStarFilled } from '@tabler/icons-react';
 import location from '../../assets/location.svg';
+import { toggleFavorite } from '../../store/slices/vacancySearchSlice';
 
 const useStyles = createStyles(() => ({
   vacancy: {
@@ -21,6 +23,12 @@ const useStyles = createStyles(() => ({
 function VacancyListItem({ vacancy }) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.vacancySearch.favorites);
+
+  const toggle = useCallback((id) => {
+    dispatch(toggleFavorite(id));
+  }, [dispatch]);
 
   return (
     <Card
@@ -41,10 +49,18 @@ function VacancyListItem({ vacancy }) {
         >
           {vacancy.profession}
         </Title>
-        <ActionIcon variant="transparent">
-          <div className="header__logo-image" href="/#">
-            <img src={star} alt="icon" />
-          </div>
+        <ActionIcon
+          onClick={(event) => { event.preventDefault(); toggle(vacancy.id); }}
+          variant="transparent"
+          sx={() => ({
+            '&:hover': {
+              color: theme.colors.brand,
+            },
+          })}
+        >
+          {!favorites.includes(vacancy.id)
+            ? <IconStar width={22} />
+            : <IconStarFilled width={22} style={{ color: theme.colors.brand[9] }} /> }
         </ActionIcon>
       </Group>
       <Group spacing={12}>

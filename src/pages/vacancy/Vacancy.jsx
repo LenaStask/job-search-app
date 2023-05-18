@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, { useEffect } from 'react';
 import {
   Card, Text, Title, ActionIcon, createStyles, Stack, Center, Container, Group,
@@ -66,7 +67,7 @@ function Vacancy() {
               </Group>
             </Card>
             <Card radius="12px" withBorder maw={773}>
-              {vacancy.vacancyRichText}
+              <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }} />
             </Card>
           </Stack>
         </Center>
