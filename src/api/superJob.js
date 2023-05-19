@@ -27,6 +27,8 @@ const authenticate = async () => {
 const getVacancies = async (data) => {
   const auth = await authenticate();
 
+  console.log(data);
+
   const params = {
     published: data.published || 1,
     page: data.page,
@@ -39,6 +41,18 @@ const getVacancies = async (data) => {
 
   if (data.catalogues) {
     params.catalogues = data.catalogues;
+  }
+
+  if (data.paymentFrom) {
+    params.payment_from = Number(data.paymentFrom);
+  }
+
+  if (data.paymentTo) {
+    params.payment_to = Number(data.paymentTo);
+  }
+
+  if (data.favorites) {
+    params.ids = [...data.favorites];
   }
 
   return client.get('vacancies/', {

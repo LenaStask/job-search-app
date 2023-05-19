@@ -11,6 +11,8 @@ export const getVacancies = createAsyncThunk(
     const response = await superJob.getVacancies({
       keyword: search.query,
       catalogues: filters.catalogue,
+      paymentFrom: filters.paymentFrom,
+      paymentTo: filters.paymentTo,
       page: pagination.page - 1,
       count: pagination.count,
     });
@@ -33,6 +35,8 @@ const vacancySearchSlice = createSlice({
   initialState: {
     filters: {
       catalogue: '',
+      paymentFrom: '',
+      paymentTo: '',
     },
     search: { query: '' },
     vacancies: [],

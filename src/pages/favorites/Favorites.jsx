@@ -2,10 +2,16 @@ import React from 'react';
 import {
   Button, Stack, Image, Text, Container, Center,
 } from '@mantine/core';
+import { useSelector } from 'react-redux';
+import VacancyList from '../../components/vacancyList/VacancyList';
+import Pagination from '../../components/pagination/Pagination';
 import empty from '../../assets/empty.svg';
 
 function Favorites() {
-  const favorites = JSON.parse(localStorage.getItem('ids') || '[]');
+  const { favorites, vacancies, isLoading } = useSelector((state) => state.vacancySearch);
+
+  const favoriteVacancies = vacancies.filter((vacancy) => favorites.includes(vacancy.id));
+
   if (favorites.length === 0) {
     return (
       <Stack maw={400} h={366} mx="auto" align="center" justify="center">
@@ -23,7 +29,8 @@ function Favorites() {
     <Container>
       <Center>
         <Stack>
-          Vacancies
+          <VacancyList vacancies={favoriteVacancies} isLoading={isLoading} />
+          <Pagination />
         </Stack>
       </Center>
     </Container>
