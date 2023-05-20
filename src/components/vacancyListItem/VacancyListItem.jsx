@@ -1,27 +1,59 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  ActionIcon, Card, Title, rem, createStyles, Text, Group, useMantineTheme,
+  ActionIcon, Card, Title, getStylesRef, createStyles, Text, Group, useMantineTheme,
 } from '@mantine/core';
 import PropTypes from 'prop-types';
 import { IconStar, IconStarFilled } from '@tabler/icons-react';
 import location from '../../assets/location.svg';
 import { toggleFavorite } from '../../store/slices/vacancyListSlice';
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
   vacancy: {
     margin: '8px 0',
     height: '100%',
   },
   title: {
+    ref: getStylesRef('title'),
     whiteSpace: 'pre',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontSize: 20,
+    fontWeight: 600,
+    color: theme.colors.brand,
+  },
+  salary: {
+    ref: getStylesRef('salary'),
+    fontSize: 16,
+    fontWeight: 600,
+  },
+  typeOfWork: {
+    ref: getStylesRef('typeOfWork'),
+    fontSize: 16,
+    fontWeight: 400,
+  },
+  town: {
+    fontSize: 16,
+    fontWeight: 400,
+  },
+  standalone: {
+    [`& .${getStylesRef('title')}`]: {
+      fontSize: 28,
+      fontWeight: 700,
+      color: theme.colors.grayScale,
+    },
+    [`& .${getStylesRef('salary')}`]: {
+      fontSize: 20,
+      fontWeight: 700,
+    },
+    [`& .${getStylesRef('typeOfWork')}`]: {
+      fontSize: 20,
+    },
   },
 }));
 
-function VacancyListItem({ vacancy }) {
-  const { classes } = useStyles();
+function VacancyListItem({ vacancy, standalone }) {
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.vacancyList.favorites);
@@ -32,22 +64,14 @@ function VacancyListItem({ vacancy }) {
 
   return (
     <Card
-      className={classes.vacancy}
+      className={cx(classes.vacancy, { [classes.standalone]: standalone })}
       padding="24px"
       style={{ margin: '16px 0' }}
       withBorder
       radius="12px"
-      component="a"
-      href={`/vacancy/${vacancy.id}`}
-      target="_blank"
     >
       <Group position="apart" noWrap="true">
-        <Title
-          className={classes.title}
-          size={rem(20)}
-          fw={600}
-          sx={{ color: theme.colors.brand }}
-        >
+        <Title className={classes.title}>
           {vacancy.profession}
         </Title>
         <ActionIcon
@@ -65,7 +89,7 @@ function VacancyListItem({ vacancy }) {
         </ActionIcon>
       </Group>
       <Group spacing={12}>
-        <Text fw={600} fz={16}>
+        <Text className={classes.salary}>
           з/п от
           {' '}
           {vacancy.payment_from}
@@ -73,11 +97,11 @@ function VacancyListItem({ vacancy }) {
           rub
         </Text>
         <Text fw={400} fz={20} c="#7B7C88">•</Text>
-        <Text fw={400} fz={16}>{vacancy.type_of_work.title}</Text>
+        <Text className={classes.typeOfWork}>{vacancy.type_of_work.title}</Text>
       </Group>
       <Group spacing={12}>
-        <img src={location} alt="location" />
-        <Text fw={400} fz={16}>{vacancy.town.title}</Text>
+        <img src={location} alt="Location" />
+        <Text className={classes.town}>{vacancy.town.title}</Text>
       </Group>
     </Card>
   );
@@ -95,6 +119,11 @@ VacancyListItem.propTypes = {
       title: PropTypes.string,
     }),
   }).isRequired,
+  standalone: PropTypes.bool,
+};
+
+VacancyListItem.defaultProps = {
+  standalone: false,
 };
 
 export default VacancyListItem;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LoadingOverlay } from '@mantine/core';
+import { LoadingOverlay, Box } from '@mantine/core';
 import VacancyListItem from '../vacancyListItem/VacancyListItem';
 
 function VacancyList({ vacancies, isLoading }) {
@@ -8,7 +8,16 @@ function VacancyList({ vacancies, isLoading }) {
     <div style={{ marginBottom: '16px', minHeight: '392px', position: 'relative' }}>
       <LoadingOverlay visible={isLoading} />
       {vacancies.map((vacancy) => (
-        <VacancyListItem key={vacancy.id} vacancy={vacancy} />
+        <Box
+          component="a"
+          href={`/vacancy/${vacancy.id}`}
+          target="_blank"
+          sx={() => ({
+            textDecoration: 'none',
+          })}
+        >
+          <VacancyListItem key={vacancy.id} vacancy={vacancy} />
+        </Box>
       ))}
     </div>
   );

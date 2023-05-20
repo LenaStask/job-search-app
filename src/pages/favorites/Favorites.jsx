@@ -29,7 +29,7 @@ function Favorites() {
       <Stack maw={400} h={366} mx="auto" align="center" justify="center">
         <Image src={empty} alt="empty" width={240} />
         <Text fw={700} fz={24}>Упс, здесь еще ничего нет!</Text>
-        <Button radius="md">Поиск Вакансий</Button>
+        <Button radius="md" component="a" href="/">Поиск Вакансий</Button>
       </Stack>
     );
   }
