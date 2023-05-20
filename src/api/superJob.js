@@ -27,8 +27,6 @@ const authenticate = async () => {
 const getVacancies = async (data) => {
   const auth = await authenticate();
 
-  console.log(data);
-
   const params = {
     published: data.published || 1,
     page: data.page,
@@ -51,8 +49,8 @@ const getVacancies = async (data) => {
     params.payment_to = Number(data.paymentTo);
   }
 
-  if (data.favorites) {
-    params.ids = [...data.favorites];
+  if (data.ids) {
+    params.ids = data.ids;
   }
 
   return client.get('vacancies/', {

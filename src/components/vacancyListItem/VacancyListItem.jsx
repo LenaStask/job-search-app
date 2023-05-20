@@ -6,7 +6,7 @@ import {
 import PropTypes from 'prop-types';
 import { IconStar, IconStarFilled } from '@tabler/icons-react';
 import location from '../../assets/location.svg';
-import { toggleFavorite } from '../../store/slices/vacancySearchSlice';
+import { toggleFavorite } from '../../store/slices/vacancyListSlice';
 
 const useStyles = createStyles(() => ({
   vacancy: {
@@ -24,7 +24,7 @@ function VacancyListItem({ vacancy }) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.vacancySearch.favorites);
+  const favorites = useSelector((state) => state.vacancyList.favorites);
 
   const toggle = useCallback((id) => {
     dispatch(toggleFavorite(id));
@@ -39,6 +39,7 @@ function VacancyListItem({ vacancy }) {
       radius="12px"
       component="a"
       href={`/vacancy/${vacancy.id}`}
+      target="_blank"
     >
       <Group position="apart" noWrap="true">
         <Title

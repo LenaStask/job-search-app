@@ -1,26 +1,28 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid } from '@mantine/core';
+import { getVacancies } from '../../store/slices/vacancyListSlice';
+import { setPage } from '../../store/slices/vacancySearchSlice';
 import Filters from '../filters/Filters';
 import Search from '../search/Search';
 import VacancyList from '../vacancyList/VacancyList';
 import Pagination from '../pagination/Pagination';
-import { getVacancies } from '../../store/slices/vacancySearchSlice';
 
 function VacancySearch() {
   const dispatch = useDispatch();
 
-  const {
-    filters,
-    search,
-    vacancies,
-    pagination,
-    isLoading,
-  } = useSelector((state) => state.vacancySearch);
+  const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
+  const { filters, search, page } = useSelector((state) => state.vacancySearch);
 
   useEffect(() => {
-    dispatch(getVacancies());
-  }, [filters, search, pagination.page]);
+    dispatch(getVacancies({
+      keyword: search.query,
+      catalogues: filters.catalogue,
+      paymentFrom: filters.paymentFrom,
+      paymentTo: filters.paymentTo,
+      page: page - 1,
+    }));
+  }, [filters, search, page]);
 
   return (
     <Container mt={40}>
@@ -30,8 +32,12 @@ function VacancySearch() {
         </Grid.Col>
         <Grid.Col sm={8}>
           <Search />
-          <VacancyList vacancies={vacancies} isLoading={isLoading} />
-          <Pagination />
+          <VacancyList vacancies={vacancies.objects} isLoading={isLoading} />
+          <Pagination
+            page={page}
+            total={vacancies.totalPages}
+            onChange={(p) => dispatch(setPage(p))}
+          />
         </Grid.Col>
       </Grid>
     </Container>

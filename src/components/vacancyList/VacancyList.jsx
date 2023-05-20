@@ -15,20 +15,23 @@ function VacancyList({ vacancies, isLoading }) {
 }
 
 VacancyList.propTypes = {
-  vacancies: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      profession: PropTypes.string,
-      payment_from: PropTypes.number,
-      type_of_work: PropTypes.shape({
-        title: PropTypes.string,
-      }),
-      town: PropTypes.shape({
-        title: PropTypes.string,
-      }),
+  vacancies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    profession: PropTypes.string,
+    payment_from: PropTypes.number,
+    type_of_work: PropTypes.shape({
+      title: PropTypes.string,
     }),
-  ).isRequired,
-  isLoading: PropTypes.bool.isRequired,
+    town: PropTypes.shape({
+      title: PropTypes.string,
+    }),
+  })),
+  isLoading: PropTypes.bool,
+};
+
+VacancyList.defaultProps = {
+  vacancies: [],
+  isLoading: false,
 };
 
 export default VacancyList;

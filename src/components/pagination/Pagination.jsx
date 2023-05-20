@@ -1,22 +1,14 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Pagination as MantinePagination } from '@mantine/core';
-import { setPage } from '../../store/slices/vacancySearchSlice';
 
-function Pagination() {
-  const dispatch = useDispatch();
-  const { pagination } = useSelector((state) => state.vacancySearch);
-
-  const onChangePage = useCallback((page) => {
-    dispatch(setPage(page));
-  }, [dispatch]);
-
+function Pagination({ page, total, onChange }) {
   return (
     <MantinePagination
-      total={Math.min(Math.ceil(pagination.total / pagination.count), 500)}
+      value={page}
+      total={total}
+      onChange={onChange}
       position="center"
-      value={pagination.page}
-      onChange={onChangePage}
       styles={(theme) => ({
         control: {
           '&[data-active]': {
@@ -27,5 +19,11 @@ function Pagination() {
     />
   );
 }
+
+Pagination.propTypes = {
+  page: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default Pagination;

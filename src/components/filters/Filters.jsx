@@ -71,7 +71,6 @@ function Filters() {
           value={form.values.paymentFrom}
           onChange={(value) => form.setFieldValue('paymentFrom', value)}
           placeholder="От"
-          data={['React', 'Vue', 'Angular', 'Svelte']}
           label="Оклад"
           labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
           radius="md"
@@ -86,7 +85,6 @@ function Filters() {
           value={form.values.paymentTo}
           onChange={(value) => form.setFieldValue('paymentTo', value)}
           placeholder="До"
-          data={['React', 'Vue', 'Angular', 'Svelte']}
           labelProps={{ fw: 'bold', fz: '16px', mb: '4px' }}
           radius="md"
           wrapperProps={{ mt: '8px' }}
