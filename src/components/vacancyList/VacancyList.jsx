@@ -15,8 +15,9 @@ function VacancyList({ vacancies, isLoading }) {
           sx={() => ({
             textDecoration: 'none',
           })}
+          key={vacancy.id}
         >
-          <VacancyListItem key={vacancy.id} vacancy={vacancy} />
+          <VacancyListItem vacancy={vacancy} />
         </Box>
       ))}
     </div>

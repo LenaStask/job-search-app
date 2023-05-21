@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { useEffect } from 'react';
 import {
-  Card, createStyles, Stack, Center, Container,
+  Card, createStyles, Stack, Container,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -30,15 +30,13 @@ function Vacancy() {
 
   if (vacancy) {
     return (
-      <Container className={classes.container}>
-        <Center mx="auto">
-          <Stack mt={40}>
-            <VacancyListItem vacancy={vacancy} className={classes.card} standalone />
-            <Card radius="12px" withBorder maw={773}>
-              <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }} />
-            </Card>
-          </Stack>
-        </Center>
+      <Container size="sm" className={classes.container}>
+        <Stack mt={40}>
+          <VacancyListItem vacancy={vacancy} className={classes.card} standalone />
+          <Card radius="12px" withBorder maw={773}>
+            <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }} />
+          </Card>
+        </Stack>
       </Container>
     );
   }

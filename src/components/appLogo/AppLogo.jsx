@@ -18,6 +18,8 @@ function AppLogo() {
         fontWeight: '600',
         cursor: 'pointer',
         color: theme.colors.grayScale,
+        position: 'absolute',
+        left: '1rem',
       })}
     >
       <Center>

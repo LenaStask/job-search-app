@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Button, Stack, Image, Text, Container, Center,
+  Button, Stack, Image, Text, Container,
 } from '@mantine/core';
 import { getFavorites } from '../../store/localStorage';
 import { getVacancies } from '../../store/slices/vacancyListSlice';
@@ -35,13 +35,11 @@ function Favorites() {
   }
 
   return (
-    <Container>
-      <Center>
-        <Stack>
-          <VacancyList vacancies={vacancies.objects} isLoading={isLoading} />
-          <Pagination page={page} total={vacancies.totalPages} onChange={setPage} />
-        </Stack>
-      </Center>
+    <Container size="sm">
+      <Stack>
+        <VacancyList vacancies={vacancies.objects} isLoading={isLoading} />
+        <Pagination page={page} total={vacancies.totalPages} onChange={setPage} />
+      </Stack>
     </Container>
   );
 }
