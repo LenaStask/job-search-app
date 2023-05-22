@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LoadingOverlay, Box } from '@mantine/core';
+import { LoadingOverlay, Box, Skeleton } from '@mantine/core';
 import VacancyListItem from '../vacancyListItem/VacancyListItem';
 
 function VacancyList({ vacancies, isLoading }) {
   return (
-    <div style={{ marginBottom: '16px', minHeight: '392px', position: 'relative' }}>
+    <Skeleton visible={isLoading}>
       <LoadingOverlay visible={isLoading} />
       {vacancies.map((vacancy) => (
         <Box
@@ -20,7 +20,7 @@ function VacancyList({ vacancies, isLoading }) {
           <VacancyListItem vacancy={vacancy} />
         </Box>
       ))}
-    </div>
+    </Skeleton>
   );
 }
 
@@ -28,7 +28,10 @@ VacancyList.propTypes = {
   vacancies: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     profession: PropTypes.string,
+    payment: PropTypes.string,
     payment_from: PropTypes.number,
+    payment_to: PropTypes.number,
+    currency: PropTypes.string,
     type_of_work: PropTypes.shape({
       title: PropTypes.string,
     }),

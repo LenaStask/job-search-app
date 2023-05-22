@@ -31,6 +31,7 @@ const getVacancies = async (data) => {
     published: data.published || 1,
     page: data.page,
     count: data.count,
+    no_agreement: 1,
   };
 
   if (data.keyword) {
