@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { useEffect } from 'react';
 import {
-  Card, createStyles, Stack, Container,
+  Card, createStyles, Stack, Container, useMantineTheme,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -23,6 +23,7 @@ function Vacancy() {
   const { vacancy } = useSelector((state) => state.vacancy);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const theme = useMantineTheme();
 
   useEffect(() => {
     dispatch(getVacancy(id));
@@ -33,7 +34,12 @@ function Vacancy() {
       <Container size="sm" className={classes.container}>
         <Stack mt={40}>
           <VacancyListItem vacancy={vacancy} className={classes.card} standalone />
-          <Card radius="12px" withBorder maw={773}>
+          <Card
+            radius="12px"
+            withBorder
+            style={{ borderColor: theme.colors.grayScale[2] }}
+            maw={773}
+          >
             <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }} />
           </Card>
         </Stack>

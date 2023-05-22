@@ -19,7 +19,7 @@ function Search() {
       onChange={(event) => setValue(event.target.value)}
       icon={<IconSearch size={16} stroke={1.5} />}
       placeholder="Введите название вакансии"
-      styles={{ input: { fontSize: 14 } }}
+      styles={{ input: { fontSize: 14, borderColor: theme.colors.grayScale[2] } }}
       size="lg"
       rightSection={(
         <Button

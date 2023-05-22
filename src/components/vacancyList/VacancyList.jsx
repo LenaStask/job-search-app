@@ -1,25 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LoadingOverlay, Box, Skeleton } from '@mantine/core';
+import {
+  LoadingOverlay, Box, Skeleton, Text, Image, Stack,
+} from '@mantine/core';
 import VacancyListItem from '../vacancyListItem/VacancyListItem';
+import empty from '../../assets/empty.svg';
 
 function VacancyList({ vacancies, isLoading }) {
+  if (vacancies.length !== 0) {
+    return (
+      <Skeleton visible={isLoading}>
+        <LoadingOverlay visible={isLoading} />
+        {vacancies.map((vacancy) => (
+          <Box
+            component="a"
+            href={`/vacancy/${vacancy.id}`}
+            target="_blank"
+            sx={() => ({
+              textDecoration: 'none',
+            })}
+            key={vacancy.id}
+          >
+            <VacancyListItem vacancy={vacancy} />
+          </Box>
+        ))}
+      </Skeleton>
+    );
+  }
   return (
     <Skeleton visible={isLoading}>
-      <LoadingOverlay visible={isLoading} />
-      {vacancies.map((vacancy) => (
-        <Box
-          component="a"
-          href={`/vacancy/${vacancy.id}`}
-          target="_blank"
-          sx={() => ({
-            textDecoration: 'none',
-          })}
-          key={vacancy.id}
-        >
-          <VacancyListItem vacancy={vacancy} />
-        </Box>
-      ))}
+      <Stack maw={400} h={366} mx="auto" align="center" justify="center">
+        <Image src={empty} alt="empty" width={240} />
+        <Text fw={700} fz={24}>Упс, вакансии не найдены!</Text>
+      </Stack>
     </Skeleton>
   );
 }

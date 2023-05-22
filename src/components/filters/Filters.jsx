@@ -31,7 +31,12 @@ function Filters() {
   }, [dispatch]);
 
   return (
-    <Paper radius={12} p="md" withBorder>
+    <Paper
+      radius={12}
+      p="md"
+      style={{ borderColor: theme.colors.grayScale[2] }}
+      withBorder
+    >
       <form onSubmit={form.onSubmit((values) => onFilter(values))}>
         <Group position="apart" mb={32}>
           <Title size="h4">
@@ -64,8 +69,11 @@ function Filters() {
           data={catalogues.map((c) => ({ value: c.key, label: c.title }))}
           rightSection={<IconChevronDown size={18} style={{ color: '#ACADB9' }} />}
           rightSectionWidth={40}
-          styles={{ rightSection: { pointerEvents: 'none' } }}
+          styles={{
+            rightSection: { pointerEvents: 'none' },
+          }}
           radius="md"
+          allowDeselect
         />
         <NumberInput
           value={form.values.paymentFrom}
@@ -78,7 +86,9 @@ function Filters() {
           step={1000}
           min={0}
           styles={{
-            control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' },
+            control: { border: 0, color: '#ACADB9' },
+            controlUp: { alignItems: 'end' },
+            controlDown: { alignItems: 'start' },
           }}
         />
         <NumberInput
@@ -91,7 +101,10 @@ function Filters() {
           step={1000}
           min={0}
           styles={{
-            control: { border: 0, color: '#ACADB9' }, controlUp: { alignItems: 'end' }, controlDown: { alignItems: 'start' }, wrapper: { mt: '8px' },
+            control: { border: 0, color: '#ACADB9' },
+            controlUp: { alignItems: 'end' },
+            controlDown: { alignItems: 'start' },
+            wrapper: { mt: '8px' },
           }}
         />
         <Button

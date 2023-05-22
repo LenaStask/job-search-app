@@ -105,7 +105,7 @@ function VacancyListItem({ vacancy, standalone }) {
     <Card
       className={cx(classes.vacancy, { [classes.standalone]: standalone })}
       padding="24px"
-      style={{ margin: '16px 0' }}
+      style={{ margin: '16px 0', borderColor: theme.colors.grayScale[2] }}
       withBorder
       radius="12px"
     >
