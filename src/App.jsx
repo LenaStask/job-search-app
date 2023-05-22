@@ -1,14 +1,23 @@
 import React from 'react';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header';
-import AppRouter from './components/UI/AppRouter';
+import Main from './pages/main/Main';
+import Favorites from './pages/favorites/Favorites';
+import Vacancy from './pages/vacancy/Vacancy';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header links={[{ link: '/', label: 'Поиск Вакансий' }, { link: '/favorites', label: 'Избранное' }]} />
-      <AppRouter />
+      <Header links={[
+        { path: '/', label: 'Поиск Вакансий' },
+        { path: '/favorites', label: 'Избранное' },
+      ]}
+      />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/vacancy/:id" element={<Vacancy />} />
+      </Routes>
     </BrowserRouter>
   );
 }

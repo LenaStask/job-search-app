@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
-import '../../assets/fonts/Poppins/Poppins-SemiBold.ttf';
-import {
-  Burger,
-  Container, Group, Header as MantineHeader, createStyles, rem, Transition, Paper,
-} from '@mantine/core';
 import PropTypes from 'prop-types';
-import { useDisclosure } from '@mantine/hooks';
 import { Link } from 'react-router-dom';
-import AppLogo from '../appLogo/AppLogo';
-
-const HEADER_HEIGHT = rem(84);
+import {
+  createStyles,
+  rem,
+  Burger,
+  Container,
+  Group,
+  Header as MantineHeader,
+  Paper,
+  Transition,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import Logo from '../logo/Logo';
 
 const useStyles = createStyles((theme) => ({
-  root: {
-    position: 'relative',
-    zIndex: 1,
-    overflow: 'hidden',
-  },
   header: {
-    display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
+    display: 'flex',
     height: '100%',
+    justifyContent: 'center',
     position: 'relative',
+
     [theme.fn.smallerThan('xs')]: {
       justifyContent: 'end',
     },
@@ -31,37 +30,14 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('xs')]: {
       display: 'none',
     },
-    color: theme.colors.green[3],
-  },
-  dropdown: {
-    position: 'absolute',
-    top: HEADER_HEIGHT,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopWidth: 0,
-    overflow: 'hidden',
-
-    [theme.fn.largerThan('xs')]: {
-      display: 'none',
-    },
-  },
-  burger: {
-    [theme.fn.largerThan('xs')]: {
-      display: 'none',
-    },
   },
   link: {
+    color: theme.colors.grayScale[6],
     display: 'block',
-    lineHeight: 1,
+    fontSize: rem(16),
+    fontWeight: 400,
     padding: `${rem(8)} ${rem(12)}`,
-    borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
 
     [theme.fn.smallerThan('sm')]: {
       borderRadius: 0,
@@ -73,20 +49,43 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.brand,
     },
   },
+  burger: {
+    [theme.fn.largerThan('xs')]: {
+      display: 'none',
+    },
+  },
+  burgerMenu: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderTopWidth: 0,
+    left: 0,
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 0,
+    top: rem(84),
+    zIndex: 1,
+
+    [theme.fn.largerThan('xs')]: {
+      display: 'none',
+    },
+  },
 }));
 
 function Header({ links }) {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState(links[0].path);
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
     <Link
       key={link.label}
-      to={link.link}
-      className={cx(classes.link, { [classes.linkActive]: active === link.link })}
+      to={link.path}
+      className={cx(classes.link, { [classes.linkActive]: active === link.path })}
       onClick={() => {
-        setActive(link.link);
+        setActive(link.path);
+        if (opened) {
+          toggle();
+        }
       }}
     >
       {link.label}
@@ -96,14 +95,14 @@ function Header({ links }) {
   return (
     <MantineHeader height={84}>
       <Container className={classes.header}>
-        <AppLogo />
+        <Logo />
         <Group className={classes.links}>
           {items}
         </Group>
         <Burger opened={opened} onClick={toggle} className={classes.burger} />
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
+        <Transition mounted={opened} duration={200} transition="pop-top-right">
           {(styles) => (
-            <Paper className={classes.dropdown} withBorder style={styles}>
+            <Paper className={classes.burgerMenu} style={styles} withBorder>
               {items}
             </Paper>
           )}
@@ -115,7 +114,7 @@ function Header({ links }) {
 
 Header.propTypes = {
   links: PropTypes.arrayOf(PropTypes.shape({
-    link: PropTypes.string,
+    path: PropTypes.string,
     label: PropTypes.string,
   })).isRequired,
 };

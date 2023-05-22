@@ -18,8 +18,8 @@ function VacancySearch() {
     dispatch(getVacancies({
       keyword: search.query,
       catalogues: filters.catalogue,
-      paymentFrom: filters.paymentFrom,
-      paymentTo: filters.paymentTo,
+      payment_from: filters.paymentFrom,
+      payment_to: filters.paymentTo,
       page: page - 1,
     }));
   }, [filters, search, page]);

@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ActionIcon, Card, Title, getStylesRef, createStyles, Text, Group, useMantineTheme,
 } from '@mantine/core';
-import PropTypes from 'prop-types';
 import { IconStar, IconStarFilled } from '@tabler/icons-react';
-import location from '../../assets/location.svg';
+import vacancyPropTypes from './vacancyPropTypes';
 import { toggleFavorite } from '../../store/slices/vacancyListSlice';
+import locationImg from '../../assets/location.svg';
 
 const useStyles = createStyles((theme) => ({
   vacancy: {
@@ -40,7 +41,7 @@ const useStyles = createStyles((theme) => ({
     [`& .${getStylesRef('title')}`]: {
       fontSize: 28,
       fontWeight: 700,
-      color: theme.colors.grayScale,
+      color: theme.colors.grayScale[6],
     },
     [`& .${getStylesRef('salary')}`]: {
       fontSize: 20,
@@ -114,6 +115,7 @@ function VacancyListItem({ vacancy, standalone }) {
           {vacancy.profession}
         </Title>
         <ActionIcon
+          data-elem={`vacancy-${vacancy.id}-shortlist-button`}
           onClick={(event) => { event.preventDefault(); toggle(vacancy.id); }}
           variant="transparent"
           sx={() => ({
@@ -123,7 +125,7 @@ function VacancyListItem({ vacancy, standalone }) {
           })}
         >
           {!favorites.includes(vacancy.id)
-            ? <IconStar width={22} />
+            ? <IconStar width={22} style={{ color: theme.colors.grayScale[4] }} />
             : <IconStarFilled width={22} style={{ color: theme.colors.brand[9] }} /> }
         </ActionIcon>
       </Group>
@@ -135,7 +137,7 @@ function VacancyListItem({ vacancy, standalone }) {
         <Text className={classes.typeOfWork}>{vacancy.type_of_work.title}</Text>
       </Group>
       <Group spacing={12}>
-        <img src={location} alt="Location" />
+        <img src={locationImg} alt="Местоположение" />
         <Text className={classes.town}>{vacancy.town.title}</Text>
       </Group>
     </Card>
@@ -143,20 +145,7 @@ function VacancyListItem({ vacancy, standalone }) {
 }
 
 VacancyListItem.propTypes = {
-  vacancy: PropTypes.shape({
-    id: PropTypes.number,
-    profession: PropTypes.string,
-    payment: PropTypes.string,
-    payment_from: PropTypes.number,
-    payment_to: PropTypes.number,
-    currency: PropTypes.string,
-    type_of_work: PropTypes.shape({
-      title: PropTypes.string,
-    }),
-    town: PropTypes.shape({
-      title: PropTypes.string,
-    }),
-  }).isRequired,
+  vacancy: vacancyPropTypes.isRequired,
   standalone: PropTypes.bool,
 };
 

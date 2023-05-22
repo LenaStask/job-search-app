@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from './superJobConfig';
 
 export default axios.create({
-  baseURL: config.base_url,
+  baseURL: process.env.REACT_APP_SUPER_JOB_BASE_URL,
   headers: {
-    'x-secret-key': config.secret_key,
+    'x-secret-key': process.env.REACT_APP_SUPER_JOB_SECRET_KEY,
   },
 });

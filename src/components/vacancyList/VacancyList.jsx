@@ -1,57 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  LoadingOverlay, Box, Skeleton, Text, Image, Stack,
+  Box,
+  Image,
+  LoadingOverlay,
+  Stack,
+  Text,
 } from '@mantine/core';
 import VacancyListItem from '../vacancyListItem/VacancyListItem';
-import empty from '../../assets/empty.svg';
+import vacancyPropTypes from '../vacancyListItem/vacancyPropTypes';
+import emptyImg from '../../assets/empty.svg';
 
 function VacancyList({ vacancies, isLoading }) {
-  if (vacancies.length !== 0) {
+  if (vacancies.length === 0 && !isLoading) {
     return (
-      <Skeleton visible={isLoading}>
-        <LoadingOverlay visible={isLoading} />
-        {vacancies.map((vacancy) => (
-          <Box
-            component="a"
-            href={`/vacancy/${vacancy.id}`}
-            target="_blank"
-            sx={() => ({
-              textDecoration: 'none',
-            })}
-            key={vacancy.id}
-          >
-            <VacancyListItem vacancy={vacancy} />
-          </Box>
-        ))}
-      </Skeleton>
-    );
-  }
-  return (
-    <Skeleton visible={isLoading}>
-      <Stack maw={400} h={366} mx="auto" align="center" justify="center">
-        <Image src={empty} alt="empty" width={240} />
+      <Stack h={290} maw={400} mt={16} mx="auto" align="center" justify="space-between">
+        <Image src={emptyImg} alt="Упс" width={240} />
         <Text fw={700} fz={24}>Упс, вакансии не найдены!</Text>
       </Stack>
-    </Skeleton>
+    );
+  }
+
+  return (
+    <Box mih={290} mt={16} pos="relative">
+      <LoadingOverlay visible={isLoading} transitionDuration={250} />
+      {vacancies.map((vacancy) => (
+        <Box
+          data-elem={`vacancy-${vacancy.id}`}
+          key={vacancy.id}
+          component="a"
+          href={`/vacancy/${vacancy.id}`}
+          target="_blank"
+          td="none"
+        >
+          <VacancyListItem vacancy={vacancy} />
+        </Box>
+      ))}
+    </Box>
   );
 }
 
 VacancyList.propTypes = {
-  vacancies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    profession: PropTypes.string,
-    payment: PropTypes.string,
-    payment_from: PropTypes.number,
-    payment_to: PropTypes.number,
-    currency: PropTypes.string,
-    type_of_work: PropTypes.shape({
-      title: PropTypes.string,
-    }),
-    town: PropTypes.shape({
-      title: PropTypes.string,
-    }),
-  })),
+  vacancies: PropTypes.arrayOf(vacancyPropTypes),
   isLoading: PropTypes.bool,
 };
 

@@ -14,6 +14,7 @@ const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
     catalogues: [],
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -22,6 +23,10 @@ const filtersSlice = createSlice({
         title: catalogue.title_trimmed,
         key: catalogue.key,
       }));
+    });
+
+    builder.addCase(getCatalogues.rejected, (state, action) => {
+      state.error = action.error.message;
     });
   },
 });

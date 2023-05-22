@@ -11,6 +11,7 @@ function Pagination({ page, total, onChange }) {
       position="center"
       styles={(theme) => ({
         control: {
+          color: theme.colors.grayScale[6],
           '&[data-active]': {
             backgroundColor: theme.colors.brand,
           },

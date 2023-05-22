@@ -1,39 +1,43 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextInput, Button, useMantineTheme } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { setQuery } from '../../store/slices/vacancySearchSlice';
 
 function Search() {
   const dispatch = useDispatch();
-  const theme = useMantineTheme();
 
   const [value, setValue] = useState('');
 
-  const onSearch = useCallback(() => {
-    dispatch(setQuery(value));
+  const onSearch = useCallback((query) => {
+    dispatch(setQuery(query));
+  }, []);
+
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === 'Enter') {
+      onSearch(value);
+    }
   }, [value]);
 
   return (
     <TextInput
+      data-elem="search-input"
       onChange={(event) => setValue(event.target.value)}
+      onKeyDown={handleKeyDown}
       icon={<IconSearch size={16} stroke={1.5} />}
       placeholder="Введите название вакансии"
-      styles={{ input: { fontSize: 14, borderColor: theme.colors.grayScale[2] } }}
       size="lg"
       rightSection={(
         <Button
-          onClick={onSearch}
+          data-elem="search-button"
+          onClick={() => onSearch(value)}
           size="xs"
           variant="filled"
-          radius="md"
-          sx={{ backgroundColor: theme.colors.brand }}
         >
           Поиск
         </Button>
       )}
       rightSectionWidth={88}
-      radius={8}
     />
   );
 }

@@ -1,62 +1,34 @@
 import client from './superJobClient';
-import config from './superJobConfig';
+import { getAuth, setAuth } from '../store/localStorage';
 
 const login = async () => client.get('oauth2/password/', {
   params: {
-    login: config.login,
-    password: config.password,
-    client_id: config.client_id,
-    client_secret: config.client_secret,
+    login: process.env.REACT_APP_SUPER_JOB_LOGIN,
+    password: process.env.REACT_APP_SUPER_JOB_PASSWORD,
+    client_id: process.env.REACT_APP_SUPER_JOB_CLIENT_ID,
+    client_secret: process.env.REACT_APP_SUPER_JOB_CLIENT_SECRET,
   },
 });
 
 const authenticate = async () => {
-  const auth = localStorage.getItem('auth');
+  let auth = getAuth();
 
-  if (auth) {
-    return JSON.parse(auth);
+  if (!auth) {
+    const res = await login();
+
+    auth = res.data;
+    setAuth(auth);
   }
 
-  const res = await login();
-
-  localStorage.setItem('auth', JSON.stringify(res.data));
-
-  return res.data;
+  return auth;
 };
 
-const getVacancies = async (data) => {
+const getVacancies = async (params) => {
   const auth = await authenticate();
-
-  const params = {
-    published: data.published || 1,
-    page: data.page,
-    count: data.count,
-    no_agreement: 1,
-  };
-
-  if (data.keyword) {
-    params.keyword = data.keyword;
-  }
-
-  if (data.catalogues) {
-    params.catalogues = data.catalogues;
-  }
-
-  if (data.paymentFrom) {
-    params.payment_from = Number(data.paymentFrom);
-  }
-
-  if (data.paymentTo) {
-    params.payment_to = Number(data.paymentTo);
-  }
-
-  if (data.ids) {
-    params.ids = data.ids;
-  }
 
   return client.get('vacancies/', {
     headers: {
-      'X-Api-App-Id': config.client_secret,
+      'X-Api-App-Id': process.env.REACT_APP_SUPER_JOB_CLIENT_SECRET,
       Authorization: `Bearer ${auth.access_token}`,
     },
     params,
@@ -67,9 +39,10 @@ const getCatalogues = async () => client.get('catalogues/');
 
 const getVacancy = async (id) => {
   const auth = await authenticate();
+
   return client.get(`vacancies/${id}/`, {
     headers: {
-      'X-Api-App-Id': config.client_secret,
+      'X-Api-App-Id': process.env.REACT_APP_SUPER_JOB_CLIENT_SECRET,
       Authorization: `Bearer ${auth.access_token}`,
     },
   });

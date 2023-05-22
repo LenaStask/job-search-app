@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Button, Stack, Image, Text, Container, Center, useMantineTheme,
+  Button,
+  Center,
+  Container,
+  Image,
+  Stack,
+  Text,
 } from '@mantine/core';
 import { getFavorites } from '../../store/localStorage';
 import { getVacancies } from '../../store/slices/vacancyListSlice';
 import VacancyList from '../../components/vacancyList/VacancyList';
 import Pagination from '../../components/pagination/Pagination';
-import empty from '../../assets/empty.svg';
+import emptyImg from '../../assets/empty.svg';
 
 function Favorites() {
   const dispatch = useDispatch();
-  const theme = useMantineTheme();
 
   const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
   const [page, setPage] = useState(1);
@@ -27,16 +31,11 @@ function Favorites() {
 
   if (favorites.length === 0) {
     return (
-      <Center style={{ height: 600 }}>
-        <Stack maw={400} h={366} mx="auto" align="center" justify="center">
-          <Image src={empty} alt="empty" width={240} />
+      <Center h={600}>
+        <Stack maw={400} mx="auto" align="center" justify="center">
+          <Image src={emptyImg} alt="Упс" width={240} />
           <Text fw={700} fz={24}>Упс, здесь еще ничего нет!</Text>
-          <Button
-            sx={{ backgroundColor: theme.colors.brand, marginTop: '20px' }}
-            radius="md"
-            component="a"
-            href="/"
-          >
+          <Button component="a" href="/" mt={20} radius="md">
             Поиск Вакансий
           </Button>
         </Stack>
