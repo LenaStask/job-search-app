@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   createStyles,
   rem,
@@ -72,8 +72,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Header({ links }) {
+  const location = useLocation();
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].path);
+  const [active, setActive] = useState(location.pathname);
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
