@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createStyles,
@@ -42,9 +43,12 @@ const useStyles = createStyles((theme) => ({
   submitButton: {
     marginTop: rem(20),
   },
+  selectIcon: {
+    color: theme.colors.grayScale[4],
+  },
 }));
 
-function Filters() {
+function Filters({ onFilter }) {
   const dispatch = useDispatch();
   const { catalogues } = useSelector((state) => state.filters);
 
@@ -63,13 +67,18 @@ function Filters() {
     dispatch(getCatalogues());
   }, []);
 
-  const onFilter = useCallback((values) => {
-    dispatch(setFilters(values));
-  }, []);
+  useEffect(() => {
+    dispatch(setFilters(form.values));
+  }, [form.values]);
+
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
+    onFilter();
+  }, [onFilter]);
 
   return (
     <Paper className={classes.container}>
-      <form onSubmit={form.onSubmit((values) => onFilter(values))}>
+      <form onSubmit={handleSubmit}>
         <Group position="apart" mb={32}>
           <Title size="h4">
             Фильтры
@@ -85,46 +94,35 @@ function Filters() {
           data-elem="industry-select"
           value={form.values.catalogue}
           onChange={(value) => form.setFieldValue('catalogue', value)}
-          label="Отрасль"
-          labelProps={{ fw: 'bold', fz: '16px', mb: '8px' }}
-          placeholder="Выберите отрасль"
           data={catalogues.map((c) => ({ value: c.key, label: c.title }))}
-          rightSection={<IconChevronDown size={18} style={{ color: theme.colors.grayScale[4] }} />}
-          rightSectionWidth={40}
-          styles={{
-            label: { color: theme.colors.grayScale[6] },
-            rightSection: { pointerEvents: 'none' },
+          label="Отрасль"
+          labelProps={{
+            color: theme.colors.grayScale[6], fw: 700, fz: 16, mb: 8,
           }}
-          radius="md"
+          placeholder="Выберите отрасль"
+          rightSection={<IconChevronDown size={18} className={classes.selectIcon} />}
+          rightSectionWidth={40}
+          styles={{ rightSection: { pointerEvents: 'none' } }}
           allowDeselect
         />
         <NumberInput
           data-elem="salary-from-input"
           value={form.values.paymentFrom}
           onChange={(value) => form.setFieldValue('paymentFrom', value)}
-          placeholder="От"
           label="Оклад"
-          labelProps={{
-            fw: 'bold', fz: '16px', mb: '8px',
-          }}
-          radius="md"
-          wrapperProps={{ mt: '20px' }}
-          step={1000}
+          labelProps={{ color: theme.colors.grayScale[6], fw: 700, fz: 16 }}
+          wrapperProps={{ mt: 20 }}
           min={0}
-          styles={{
-            label: { color: theme.colors.grayScale[6] },
-          }}
+          step={1000}
+          placeholder="От"
         />
         <NumberInput
           data-elem="salary-to-input"
           value={form.values.paymentTo}
           onChange={(value) => form.setFieldValue('paymentTo', value)}
-          placeholder="До"
-          labelProps={{ fw: 'bold', fz: '16px', mb: '4px' }}
-          radius="md"
-          wrapperProps={{ mt: '8px' }}
-          step={1000}
           min={0}
+          step={1000}
+          placeholder="До"
         />
         <Button
           data-elem="search-button"
@@ -138,5 +136,9 @@ function Filters() {
     </Paper>
   );
 }
+
+Filters.propTypes = {
+  onFilter: PropTypes.func.isRequired,
+};
 
 export default Filters;

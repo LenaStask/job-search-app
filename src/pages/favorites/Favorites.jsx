@@ -9,7 +9,7 @@ import {
   Text,
 } from '@mantine/core';
 import { getFavorites } from '../../store/localStorage';
-import { getVacancies } from '../../store/slices/vacancyListSlice';
+import { getVacancies, reset as resetVacancyList } from '../../store/slices/vacancyListSlice';
 import VacancyList from '../../components/vacancyList/VacancyList';
 import Pagination from '../../components/pagination/Pagination';
 import emptyImg from '../../assets/empty.svg';
@@ -29,9 +29,13 @@ function Favorites() {
     }));
   }, [page]);
 
+  useEffect(() => () => {
+    dispatch(resetVacancyList());
+  }, []);
+
   if (favorites.length === 0) {
     return (
-      <Center h={600}>
+      <Center h={400}>
         <Stack maw={400} mx="auto" align="center" justify="center">
           <Image src={emptyImg} alt="Упс" width={240} />
           <Text fw={700} fz={24}>Упс, здесь еще ничего нет!</Text>
@@ -45,10 +49,8 @@ function Favorites() {
 
   return (
     <Container size="sm">
-      <Stack>
-        <VacancyList vacancies={vacancies.objects} isLoading={isLoading} />
-        <Pagination page={page} total={vacancies.totalPages} onChange={setPage} />
-      </Stack>
+      <VacancyList vacancies={vacancies.objects} isLoading={isLoading} />
+      <Pagination page={page} total={vacancies.totalPages} onChange={setPage} />
     </Container>
   );
 }

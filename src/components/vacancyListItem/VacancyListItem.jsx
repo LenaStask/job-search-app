@@ -2,60 +2,83 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  ActionIcon, Card, Title, getStylesRef, createStyles, Text, Group, useMantineTheme,
+  createStyles,
+  getStylesRef,
+  ActionIcon,
+  Card,
+  Group,
+  rem,
+  Text,
+  Title,
 } from '@mantine/core';
 import { IconStar, IconStarFilled } from '@tabler/icons-react';
+import renderSalary from './salaryRenderer';
 import vacancyPropTypes from './vacancyPropTypes';
 import { toggleFavorite } from '../../store/slices/vacancyListSlice';
 import locationImg from '../../assets/location.svg';
 
 const useStyles = createStyles((theme) => ({
   vacancy: {
-    margin: '8px 0',
+    marginBottom: `${rem(16)}`,
     height: '100%',
+    border: `${rem(1)} solid ${theme.colors.grayScale[2]}`,
+    borderRadius: rem(12),
   },
   title: {
     ref: getStylesRef('title'),
     whiteSpace: 'pre',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: 20,
+    fontSize: rem(20),
     fontWeight: 600,
     color: theme.colors.brand,
   },
+  iconStar: {
+    color: theme.colors.grayScale[4],
+    '&:hover': {
+      color: theme.colors.brand,
+    },
+  },
+  iconStarFilled: {
+    color: theme.colors.brand[9],
+  },
   salary: {
     ref: getStylesRef('salary'),
-    fontSize: 16,
+    fontSize: rem(16),
     fontWeight: 600,
   },
   typeOfWork: {
     ref: getStylesRef('typeOfWork'),
-    fontSize: 16,
+    fontSize: rem(16),
     fontWeight: 400,
   },
+  dot: {
+    fontSize: rem(20),
+    fontWeight: 400,
+    color: theme.colors.grayScale[5],
+  },
   town: {
-    fontSize: 16,
+    fontSize: rem(16),
     fontWeight: 400,
   },
   standalone: {
     [`& .${getStylesRef('title')}`]: {
-      fontSize: 28,
+      fontSize: rem(28),
       fontWeight: 700,
       color: theme.colors.grayScale[6],
     },
     [`& .${getStylesRef('salary')}`]: {
-      fontSize: 20,
+      fontSize: rem(20),
       fontWeight: 700,
     },
     [`& .${getStylesRef('typeOfWork')}`]: {
-      fontSize: 20,
+      fontSize: rem(20),
     },
   },
 }));
 
 function VacancyListItem({ vacancy, standalone }) {
   const { classes, cx } = useStyles();
-  const theme = useMantineTheme();
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.vacancyList.favorites);
 
@@ -63,52 +86,10 @@ function VacancyListItem({ vacancy, standalone }) {
     dispatch(toggleFavorite(id));
   }, [dispatch]);
 
-  const renderSalary = (from, to, currency) => {
-    if (from !== 0 && to !== 0) {
-      return (
-        <span>
-          з/п
-          {' '}
-          {from}
-          -
-          {to}
-          {' '}
-          {currency}
-        </span>
-      );
-    } if (from !== 0 && to === 0) {
-      return (
-        <span>
-          з/п
-          {' '}
-          от
-          {' '}
-          {from}
-          {' '}
-          {currency}
-        </span>
-      );
-    } if (from !== 0 && to === 0) {
-      return (
-        <span>
-          з/п
-          {' '}
-          {to}
-          {' '}
-          {currency}
-        </span>
-      );
-    }
-    return (<span>з/п по договоренности</span>);
-  };
-
   return (
     <Card
       className={cx(classes.vacancy, { [classes.standalone]: standalone })}
-      padding="24px"
-      style={{ margin: '16px 0', borderColor: theme.colors.grayScale[2] }}
-      withBorder
-      radius="12px"
+      padding={24}
     >
       <Group position="apart" noWrap="true">
         <Title className={classes.title}>
@@ -116,24 +97,22 @@ function VacancyListItem({ vacancy, standalone }) {
         </Title>
         <ActionIcon
           data-elem={`vacancy-${vacancy.id}-shortlist-button`}
-          onClick={(event) => { event.preventDefault(); toggle(vacancy.id); }}
+          onClick={(event) => {
+            event.preventDefault();
+            toggle(vacancy.id);
+          }}
           variant="transparent"
-          sx={() => ({
-            '&:hover': {
-              color: theme.colors.brand,
-            },
-          })}
         >
           {!favorites.includes(vacancy.id)
-            ? <IconStar width={22} style={{ color: theme.colors.grayScale[4] }} />
-            : <IconStarFilled width={22} style={{ color: theme.colors.brand[9] }} /> }
+            ? <IconStar width={22} className={classes.iconStar} />
+            : <IconStarFilled width={22} className={classes.iconStarFilled} /> }
         </ActionIcon>
       </Group>
       <Group spacing={12}>
         <Text className={classes.salary}>
           {renderSalary(vacancy.payment_from, vacancy.payment_to, vacancy.currency)}
         </Text>
-        <Text fw={400} fz={20} c="#7B7C88">•</Text>
+        <Text className={classes.dot}>•</Text>
         <Text className={classes.typeOfWork}>{vacancy.type_of_work.title}</Text>
       </Group>
       <Group spacing={12}>

@@ -14,15 +14,15 @@ import emptyImg from '../../assets/empty.svg';
 function VacancyList({ vacancies, isLoading }) {
   if (vacancies.length === 0 && !isLoading) {
     return (
-      <Stack h={290} maw={400} mt={16} mx="auto" align="center" justify="space-between">
+      <Stack h={280} maw={400} mt={16} mx="auto" align="center" justify="space-between">
         <Image src={emptyImg} alt="Упс" width={240} />
-        <Text fw={700} fz={24}>Упс, вакансии не найдены!</Text>
+        <Text fw={700} fz={20}>Упс, вакансии не найдены!</Text>
       </Stack>
     );
   }
 
   return (
-    <Box mih={290} mt={16} pos="relative">
+    <Box mih={280} pos="relative">
       <LoadingOverlay visible={isLoading} transitionDuration={250} />
       {vacancies.map((vacancy) => (
         <Box

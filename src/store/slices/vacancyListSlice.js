@@ -44,16 +44,18 @@ export const getVacancies = createAsyncThunk(
   },
 );
 
+const initialState = {
+  vacancies: {
+    objects: [],
+    totalPages: 0,
+  },
+  favorites: getFavorites(),
+  isLoading: false,
+};
+
 const vacancyListSlice = createSlice({
   name: 'vacancyList',
-  initialState: {
-    vacancies: {
-      objects: [],
-      totalPages: 0,
-    },
-    favorites: getFavorites(),
-    isLoading: false,
-  },
+  initialState,
   reducers: {
     toggleFavorite(state, action) {
       if (!state.favorites.includes(action.payload)) {
@@ -62,6 +64,9 @@ const vacancyListSlice = createSlice({
         state.favorites = state.favorites.filter((id) => id !== action.payload);
       }
       setFavorites(state.favorites);
+    },
+    reset() {
+      return initialState;
     },
   },
   extraReducers: (builder) => {
@@ -84,6 +89,6 @@ const vacancyListSlice = createSlice({
   },
 });
 
-export const { toggleFavorite } = vacancyListSlice.actions;
+export const { toggleFavorite, reset } = vacancyListSlice.actions;
 
 export default vacancyListSlice.reducer;

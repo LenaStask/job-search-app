@@ -9,6 +9,7 @@ function Pagination({ page, total, onChange }) {
       total={total}
       onChange={onChange}
       position="center"
+      mt={40}
       styles={(theme) => ({
         control: {
           color: theme.colors.grayScale[6],
