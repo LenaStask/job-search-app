@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
 } from '@mantine/core';
-import { getFavorites } from '../../store/localStorage';
 import { getVacancies, reset as resetVacancyList } from '../../store/slices/vacancyListSlice';
 import VacancyList from '../../components/vacancyList/VacancyList';
 import Pagination from '../../components/pagination/Pagination';
@@ -17,10 +16,8 @@ import emptyImg from '../../assets/empty.svg';
 function Favorites() {
   const dispatch = useDispatch();
 
-  const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
+  const { vacancies, isLoading, favorites } = useSelector((state) => state.vacancyList);
   const [page, setPage] = useState(1);
-
-  const favorites = getFavorites();
 
   useEffect(() => {
     dispatch(getVacancies({

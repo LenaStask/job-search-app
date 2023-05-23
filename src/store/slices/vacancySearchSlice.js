@@ -16,11 +16,9 @@ const vacancySearchSlice = createSlice({
   reducers: {
     setFilters(state, action) {
       state.filters = { ...action.payload };
-      state.page = 1;
     },
     setQuery(state, action) {
       state.query = action.payload;
-      state.page = 1;
     },
     setPage(state, action) {
       state.page = action.payload;

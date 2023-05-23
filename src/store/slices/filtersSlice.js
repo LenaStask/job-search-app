@@ -20,7 +20,7 @@ const filtersSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getCatalogues.fulfilled, (state, action) => {
       state.catalogues = action.payload.map((catalogue) => ({
-        title: catalogue.title_trimmed,
+        title: catalogue.title,
         key: catalogue.key,
       }));
     });

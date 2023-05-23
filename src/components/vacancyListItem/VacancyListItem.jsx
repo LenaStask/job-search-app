@@ -78,13 +78,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function VacancyListItem({ vacancy, standalone }) {
-  const { classes, cx } = useStyles();
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.vacancyList.favorites);
 
+  const { classes, cx } = useStyles();
+
   const toggle = useCallback((id) => {
     dispatch(toggleFavorite(id));
-  }, [dispatch]);
+  }, [toggleFavorite]);
 
   return (
     <Card

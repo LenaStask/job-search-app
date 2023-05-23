@@ -66,7 +66,7 @@ const vacancyListSlice = createSlice({
       setFavorites(state.favorites);
     },
     reset() {
-      return initialState;
+      return { ...initialState, favorites: getFavorites() };
     },
   },
   extraReducers: (builder) => {

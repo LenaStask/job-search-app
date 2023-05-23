@@ -14,23 +14,29 @@ function VacancySearch() {
   const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
   const { filters, query, page } = useSelector((state) => state.vacancySearch);
 
-  const refresh = () => {
+  const setPageAndSearch = (p) => {
+    dispatch(setPage(p));
+
     dispatch(getVacancies({
       keyword: query,
       catalogues: filters.catalogue,
       payment_from: filters.paymentFrom,
       payment_to: filters.paymentTo,
-      page: page - 1,
+      page: p - 1,
     }));
+  };
+
+  const refresh = () => {
+    setPageAndSearch(1);
   };
 
   useEffect(() => {
     refresh();
-  }, [page]);
 
-  useEffect(() => () => {
-    dispatch(resetVacancyList());
-    dispatch(resetSearch());
+    return () => {
+      dispatch(resetVacancyList());
+      dispatch(resetSearch());
+    };
   }, []);
 
   return (
@@ -44,7 +50,7 @@ function VacancySearch() {
         <Pagination
           page={page}
           total={vacancies.totalPages}
-          onChange={(p) => dispatch(setPage(p))}
+          onChange={(p) => setPageAndSearch(p)}
         />
       </Grid.Col>
     </Grid>
