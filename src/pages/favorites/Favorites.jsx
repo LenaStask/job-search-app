@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Center,
@@ -16,14 +17,17 @@ import emptyImg from '../../assets/empty.svg';
 function Favorites() {
   const dispatch = useDispatch();
 
-  const { vacancies, isLoading, favorites } = useSelector((state) => state.vacancyList);
+  const { favorites } = useSelector((state) => state.favorites);
+  const { vacancies, isLoading } = useSelector((state) => state.vacancyList);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getVacancies({
-      ids: favorites,
-      page: page - 1,
-    }));
+    if (favorites.length !== 0) {
+      dispatch(getVacancies({
+        ids: favorites,
+        page: page - 1,
+      }));
+    }
   }, [page]);
 
   useEffect(() => () => {
@@ -36,7 +40,7 @@ function Favorites() {
         <Stack maw={400} mx="auto" align="center" justify="center">
           <Image src={emptyImg} alt="Упс" width={240} />
           <Text fw={700} fz={24}>Упс, здесь еще ничего нет!</Text>
-          <Button component="a" href="/" mt={20} radius="md">
+          <Button component={Link} to="/" mt={20} radius="md">
             Поиск Вакансий
           </Button>
         </Stack>

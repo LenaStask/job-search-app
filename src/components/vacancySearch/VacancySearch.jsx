@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@mantine/core';
 import { getVacancies, reset as resetVacancyList } from '../../store/slices/vacancyListSlice';
-import { setPage, reset as resetSearch } from '../../store/slices/vacancySearchSlice';
+import { setPage } from '../../store/slices/vacancySearchSlice';
 import Filters from '../filters/Filters';
 import Search from '../search/Search';
 import VacancyList from '../vacancyList/VacancyList';
@@ -35,7 +35,6 @@ function VacancySearch() {
 
     return () => {
       dispatch(resetVacancyList());
-      dispatch(resetSearch());
     };
   }, []);
 

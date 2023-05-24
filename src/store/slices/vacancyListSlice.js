@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import superJob from '../../api/superJob';
-import { getFavorites, setFavorites } from '../localStorage';
 
 const VACANCIES_PER_PAGE = process.env.REACT_APP_PAGINATION_VACANCIES_PER_PAGE;
 const MAX_PAGES = process.env.REACT_APP_PAGINATION_MAX_PAGES;
@@ -49,7 +48,6 @@ const initialState = {
     objects: [],
     totalPages: 0,
   },
-  favorites: getFavorites(),
   isLoading: false,
 };
 
@@ -57,16 +55,8 @@ const vacancyListSlice = createSlice({
   name: 'vacancyList',
   initialState,
   reducers: {
-    toggleFavorite(state, action) {
-      if (!state.favorites.includes(action.payload)) {
-        state.favorites.push(action.payload);
-      } else {
-        state.favorites = state.favorites.filter((id) => id !== action.payload);
-      }
-      setFavorites(state.favorites);
-    },
     reset() {
-      return { ...initialState, favorites: getFavorites() };
+      return initialState;
     },
   },
   extraReducers: (builder) => {
@@ -89,6 +79,6 @@ const vacancyListSlice = createSlice({
   },
 });
 
-export const { toggleFavorite, reset } = vacancyListSlice.actions;
+export const { reset } = vacancyListSlice.actions;
 
 export default vacancyListSlice.reducer;

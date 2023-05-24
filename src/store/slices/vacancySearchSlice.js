@@ -23,9 +23,6 @@ const vacancySearchSlice = createSlice({
     setPage(state, action) {
       state.page = action.payload;
     },
-    reset() {
-      return initialState;
-    },
   },
 });
 
@@ -33,7 +30,6 @@ export const {
   setFilters,
   setQuery,
   setPage,
-  reset,
 } = vacancySearchSlice.actions;
 
 export default vacancySearchSlice.reducer;

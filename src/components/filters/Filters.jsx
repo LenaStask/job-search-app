@@ -51,15 +51,16 @@ const useStyles = createStyles((theme) => ({
 function Filters({ onFilter }) {
   const dispatch = useDispatch();
   const { catalogues } = useSelector((state) => state.filters);
+  const { catalogue, paymentFrom, paymentTo } = useSelector((state) => state.vacancySearch.filters);
 
   const theme = useMantineTheme();
   const { classes } = useStyles();
 
   const form = useForm({
     initialValues: {
-      catalogue: '',
-      paymentFrom: '',
-      paymentTo: '',
+      catalogue,
+      paymentFrom,
+      paymentTo,
     },
   });
 
@@ -83,7 +84,14 @@ function Filters({ onFilter }) {
           <Title size="h4">
             Фильтры
           </Title>
-          <Box onClick={() => form.reset()} className={classes.resetButton}>
+          <Box
+            onClick={() => form.setValues({
+              catalogue: '',
+              paymentFrom: '',
+              paymentTo: '',
+            })}
+            className={classes.resetButton}
+          >
             <Center>
               <span>Сбросить все</span>
               <X size={14} strokeWidth={2} className={classes.resetButtonIcon} />

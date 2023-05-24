@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -76,6 +76,10 @@ function Header({ links }) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(location.pathname);
   const { classes, cx } = useStyles();
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location]);
 
   const items = links.map((link) => (
     <Link

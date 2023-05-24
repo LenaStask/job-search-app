@@ -15,12 +15,18 @@ const vacancySlice = createSlice({
   initialState: {
     vacancy: null,
   },
-  reducer: {},
+  reducers: {
+    reset(state) {
+      state.vacancy = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getVacancy.fulfilled, (state, action) => {
       state.vacancy = action.payload;
     });
   },
 });
+
+export const { reset } = vacancySlice.actions;
 
 export default vacancySlice.reducer;

@@ -11,7 +11,7 @@ import {
   Loader,
   Stack,
 } from '@mantine/core';
-import { getVacancy } from '../../store/slices/vacancySlice';
+import { getVacancy, reset } from '../../store/slices/vacancySlice';
 import VacancyListItem from '../../components/vacancyListItem/VacancyListItem';
 
 const useStyles = createStyles((theme) => ({
@@ -39,6 +39,8 @@ function Vacancy() {
 
   useEffect(() => {
     dispatch(getVacancy(id));
+
+    return () => dispatch(reset());
   }, []);
 
   if (!vacancy) {

@@ -1,15 +1,16 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextInput, Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { setQuery } from '../../store/slices/vacancySearchSlice';
 
 function Search({ onSearch }) {
   const dispatch = useDispatch();
+  const { query } = useSelector((state) => state.vacancySearch);
 
-  const handleChange = useCallback((query) => {
-    dispatch(setQuery(query));
+  const handleChange = useCallback((value) => {
+    dispatch(setQuery(value));
   }, []);
 
   const handleKeyDown = useCallback((event) => {
@@ -21,6 +22,7 @@ function Search({ onSearch }) {
   return (
     <TextInput
       data-elem="search-input"
+      value={query}
       onChange={(event) => handleChange(event.target.value)}
       onKeyDown={handleKeyDown}
       icon={<IconSearch size={16} stroke={1.5} />}

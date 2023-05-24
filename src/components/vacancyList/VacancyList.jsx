@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Image,
@@ -28,9 +29,8 @@ function VacancyList({ vacancies, isLoading }) {
         <Box
           data-elem={`vacancy-${vacancy.id}`}
           key={vacancy.id}
-          component="a"
-          href={`/vacancy/${vacancy.id}`}
-          target="_blank"
+          component={Link}
+          to={`/vacancy/${vacancy.id}`}
           td="none"
         >
           <VacancyListItem vacancy={vacancy} />

@@ -14,7 +14,7 @@ import {
 import { IconStar, IconStarFilled } from '@tabler/icons-react';
 import renderSalary from './salaryRenderer';
 import vacancyPropTypes from './vacancyPropTypes';
-import { toggleFavorite } from '../../store/slices/vacancyListSlice';
+import { toggleFavorite } from '../../store/slices/favoritesSlice';
 import locationImg from '../../assets/location.svg';
 
 const useStyles = createStyles((theme) => ({
@@ -79,7 +79,7 @@ const useStyles = createStyles((theme) => ({
 
 function VacancyListItem({ vacancy, standalone }) {
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.vacancyList.favorites);
+  const { favorites } = useSelector((state) => state.favorites);
 
   const { classes, cx } = useStyles();
 
